@@ -35,12 +35,12 @@ public class Mouth {
             while ((sCurrentLine = br.readLine()) != null) {
                 Mouth mouth = new Mouth(sCurrentLine);
                 mouths.add(mouth);
-                System.out.println(sCurrentLine);
+              //  System.out.println(sCurrentLine);
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
-        System.out.println(mouths);
+       // System.out.println(mouths);
         return mouths;
     }
 }

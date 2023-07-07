@@ -35,12 +35,12 @@ public class Eye {
             while ((sCurrentLine = br.readLine()) != null) {
                 Eye eye = new Eye(sCurrentLine);
                 eyes.add(eye);
-                System.out.println(sCurrentLine);
+                //System.out.println(sCurrentLine);
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
-        System.out.println(eyes);
+       // System.out.println(eyes);
         return eyes;
     }
 }

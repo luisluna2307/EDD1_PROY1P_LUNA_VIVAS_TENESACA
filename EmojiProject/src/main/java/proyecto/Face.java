@@ -36,13 +36,13 @@ public class Face {
             String sCurrentLine;
             while ((sCurrentLine = br.readLine()) != null) {
                 Face face = new Face(sCurrentLine);
-                faces.add(face);
-                System.out.println(sCurrentLine);
+                faces.addLast(face);
+               // System.out.println(sCurrentLine);
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
-        System.out.println(faces);
+       // System.out.println(faces);
         return faces;
     }
 

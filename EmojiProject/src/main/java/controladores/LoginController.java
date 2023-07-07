@@ -17,7 +17,7 @@ import javafx.stage.Stage;
 import modelo.User;
 import tdas.ArrayList;
 
-public class PrimaryController {
+public class LoginController {
 
     @FXML
     private ImageView imgViewLogo;
@@ -41,7 +41,7 @@ public class PrimaryController {
         if (correctAcccount(usuario, contraseña)) {
             Stage s = (Stage) loginButton.getScene().getWindow();
             s.close();
-            FXMLLoader fxmLoader = new FXMLLoader(getClass().getResource("secondary.fxml"));
+            FXMLLoader fxmLoader = new FXMLLoader(getClass().getResource("principalPane.fxml"));
             Parent root = fxmLoader.load();
             Scene scene = new Scene(root);
             Stage stage = new Stage();

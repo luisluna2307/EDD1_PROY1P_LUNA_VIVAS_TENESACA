@@ -21,12 +21,14 @@ public class App extends Application {
     public static String pathEyes ="/informacionPredefinida/pathEyes.txt";
     public static String pathMouths ="/informacionPredefinida/pathMouths.txt";
     public static String pathFaces ="/informacionPredefinida/pathFaces.txt";
+    public static String pathInterfaz ="/interfaz/";
+    
     
 
     
     @Override
     public void start(Stage stage) throws IOException {
-        scene = new Scene(loadFXML("secondary"));
+        scene = new Scene(loadFXML("principalPane"));
         stage.setScene(scene);
         stage.show();
     }
