@@ -8,9 +8,9 @@
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="806.0" prefWidth="1214.0" style="-fx-background-color: C3F9FF;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controladores.PrincipalPaneController">
    <bottom>
-      <AnchorPane prefHeight="454.0" prefWidth="1214.0" style="-fx-background-color: #FFB6C1;" BorderPane.alignment="CENTER">
+      <AnchorPane prefHeight="211.0" prefWidth="1214.0" style="-fx-background-color: #FFB6C1;" BorderPane.alignment="CENTER">
          <children>
-            <HBox fx:id="hBoxImagesContainers" layoutX="184.0" layoutY="26.0" prefHeight="78.0" prefWidth="840.0">
+            <HBox fx:id="hBoxImagesContainers" layoutX="187.0" layoutY="60.0" prefHeight="78.0" prefWidth="840.0">
                <children>
                   <ImageView fx:id="imgview1" fitHeight="90.0" fitWidth="140.0" onMouseClicked="#imgViewClick1" pickOnBounds="true" preserveRatio="true" />
                   <ImageView fx:id="imgview2" fitHeight="90.0" fitWidth="140.0" onMouseClicked="#imgViewClick2" pickOnBounds="true" preserveRatio="true" />
@@ -22,32 +22,25 @@
             <Button fx:id="nextButton" layoutX="1034.0" layoutY="58.0" mnemonicParsing="false" onAction="#next" text="Next" />
             <Button fx:id="previusButton" layoutX="120.0" layoutY="58.0" mnemonicParsing="false" onAction="#previous" text="Previo" />
             <Button mnemonicParsing="false" text="Button" />
-            <HBox fx:id="hBoxImagesContainers1" layoutX="184.0" layoutY="116.0" prefHeight="78.0" prefWidth="840.0">
-               <children>
-                  <ImageView fx:id="imgviewEyes1" fitHeight="90.0" fitWidth="140.0" onMouseClicked="#imgViewEyesClick1" pickOnBounds="true" preserveRatio="true" />
-                  <ImageView fx:id="imgviewEyes2" fitHeight="90.0" fitWidth="140.0" onMouseClicked="#imgViewEyesClick2" pickOnBounds="true" preserveRatio="true" />
-                  <ImageView fx:id="imgviewEyes3" fitHeight="90.0" fitWidth="140.0" onMouseClicked="#imgViewEyesClick3" pickOnBounds="true" preserveRatio="true" />
-                  <ImageView fx:id="imgviewEyes4" fitHeight="90.0" fitWidth="140.0" onMouseClicked="#imgViewEyesClick4" pickOnBounds="true" preserveRatio="true" />
-                  <ImageView fx:id="imgviewEyes5" fitHeight="90.0" fitWidth="140.0" onMouseClicked="#imgViewEyesClick5" pickOnBounds="true" preserveRatio="true" />
-                  <ImageView fx:id="imgviewEyes6" fitHeight="90.0" fitWidth="140.0" onMouseClicked="#imgViewEyesClick6" pickOnBounds="true" preserveRatio="true" />
-               </children>
-            </HBox>
+            <Button fx:id="btnFace" layoutX="342.0" layoutY="13.0" mnemonicParsing="false" onAction="#btnFaceClick" text="Face" />
+            <Button fx:id="btnEye" layoutX="467.0" layoutY="13.0" mnemonicParsing="false" onAction="#btnEyeClick" text="Eye" />
+            <Button fx:id="btnMouth" layoutX="581.0" layoutY="13.0" mnemonicParsing="false" onAction="#btnMouthClick" text="Mouth" />
          </children>
       </AnchorPane>
    </bottom>
    <top>
       <AnchorPane fx:id="topContainer" prefHeight="34.0" prefWidth="1214.0" BorderPane.alignment="CENTER" />
    </top>
-   <center>
-      <AnchorPane fx:id="emojiContainer" prefHeight="442.0" prefWidth="1214.0" BorderPane.alignment="CENTER">
+   <right>
+      <AnchorPane fx:id="emojiContainer" prefHeight="464.0" prefWidth="1214.0" BorderPane.alignment="CENTER">
          <children>
-            <AnchorPane layoutX="395.0" layoutY="14.0" prefHeight="174.0" prefWidth="383.0">
+            <AnchorPane layoutX="495.0" layoutY="117.0" prefHeight="283.0" prefWidth="306.0">
                <children>
-                  <ImageView fx:id="imgViewMouth" fitHeight="105.0" fitWidth="200.0" layoutX="92.0" layoutY="110.0" pickOnBounds="true" preserveRatio="true" />
-                  <ImageView fx:id="imgViewEyes" fitHeight="95.0" fitWidth="200.0" layoutX="101.0" layoutY="29.0" pickOnBounds="true" preserveRatio="true" />
-                  <ImageView fx:id="imgViewEmoji" fitHeight="220.0" fitWidth="231.0" layoutX="76.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="imgViewEmoji" fitHeight="326.0" fitWidth="335.0" layoutX="-5.0" layoutY="2.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="imgViewMouth" fitHeight="105.0" fitWidth="200.0" layoutX="71.0" layoutY="164.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="imgViewEyes" fitHeight="95.0" fitWidth="200.0" layoutX="65.0" layoutY="69.0" pickOnBounds="true" preserveRatio="true" />
                </children>
             </AnchorPane>
          </children></AnchorPane>
-   </center>
+   </right>
 </BorderPane>

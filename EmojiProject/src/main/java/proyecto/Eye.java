@@ -14,18 +14,18 @@ import tdas.CDoublyLinkedList;
  * @author DELL
  */
 public class Eye {
-    String eye;
+    String path;
 
     public Eye(String eye) {
-        this.eye = eye;
+        this.path = eye;
     }
 
-    public String getEye() {
-        return eye;
+    public String getPath() {
+        return path;
     }
 
-    public void setEye(String eye) {
-        this.eye = eye;
+    public void setPath(String eye) {
+        this.path = eye;
     }
     public static CDoublyLinkedList<Eye> loadEyes(String path){
         CDoublyLinkedList<Eye> eyes = new CDoublyLinkedList<>();

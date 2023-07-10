@@ -14,18 +14,18 @@ import tdas.CDoublyLinkedList;
  * @author DELL
  */
 public class Mouth {
-    String mouth;
+    String path;
 
     public Mouth(String mouth) {
-        this.mouth = mouth;
+        this.path = mouth;
     }
 
-    public String getMouth() {
-        return mouth;
+    public String getPath() {
+        return path;
     }
 
-    public void setMouth(String mouth) {
-        this.mouth = mouth;
+    public void setPath(String mouth) {
+        this.path = mouth;
     }
     public static CDoublyLinkedList<Mouth> loadMouths(String path){
         CDoublyLinkedList<Mouth> mouths = new CDoublyLinkedList<>();
