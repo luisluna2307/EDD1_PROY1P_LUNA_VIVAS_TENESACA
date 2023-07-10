@@ -4,13 +4,17 @@
  */
 package controladores;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import modelo.User;
+import tdas.ArrayList;
 
 /**
  * FXML Controller class
@@ -18,6 +22,8 @@ import javafx.scene.control.TextField;
  * @author DELL
  */
 public class RegisterController implements Initializable {
+
+    private static ArrayList<User> listUsers = User.loadUsers();
 
     @FXML
     private TextField txtUser;
@@ -36,7 +42,7 @@ public class RegisterController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-    }    
+    }
 
     @FXML
     private void backToPrimary(ActionEvent event) {
@@ -44,6 +50,32 @@ public class RegisterController implements Initializable {
 
     @FXML
     private void save(ActionEvent event) {
+        String username = txtUser.getText();
+        String pass = txtPsw.getText();
+        String confirmPass = txtConfirmPsw.getText();
+
+        if (username.isEmpty() || pass.isEmpty() || confirmPass.isEmpty()) {
+            showAlert("Porfavor, llenar todos los campos");
+        }
+        if (!pass.equals(confirmPass)) {
+            showAlert("No coinciden las contraseñas");
+        }
+
+        showAlert("Usuario ha sido registrado con exito");
+        clear();
     }
-    
+
+    private void showAlert(String m) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setHeaderText(null);
+        alert.setContentText(m);
+        alert.showAndWait();
+    }
+
+    private void clear() {
+        txtUser.clear();
+        txtPsw.clear();
+        txtConfirmPsw.clear();
+    }
+
 }

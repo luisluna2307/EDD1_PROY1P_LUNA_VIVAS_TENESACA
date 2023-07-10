@@ -18,14 +18,11 @@ public class App extends Application {
     public static String fileImagesMouths = "src/main/resources/images/mouth/";
     public static String fileImagesFaces = "src/main/resources/images/faces/";
     public static String fileImagesEyes = "src/main/resources/images/eyes/";
-    public static String pathEyes ="/informacionPredefinida/pathEyes.txt";
-    public static String pathMouths ="/informacionPredefinida/pathMouths.txt";
-    public static String pathFaces ="/informacionPredefinida/pathFaces.txt";
-    public static String pathInterfaz ="/interfaz/";
-    
-    
+    public static String pathEyes = "/informacionPredefinida/pathEyes.txt";
+    public static String pathMouths = "/informacionPredefinida/pathMouths.txt";
+    public static String pathFaces = "/informacionPredefinida/pathFaces.txt";
+    public static String pathInterfaz = "/interfaz/";
 
-    
     @Override
     public void start(Stage stage) throws IOException {
         scene = new Scene(loadFXML("principalPane"));

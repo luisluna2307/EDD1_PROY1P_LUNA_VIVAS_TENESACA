@@ -51,7 +51,7 @@ public class PrincipalPaneController {
     private LinkedList<Mouth> currentPathMouths;
     private LinkedList<Eye> currentPathEyes;
     private int currentIndex;
-    private  boolean isChangingFace;
+    private boolean isChangingFace;
     private boolean isChangingEye;
     private boolean isChangingMouth;
     @FXML
@@ -78,19 +78,19 @@ public class PrincipalPaneController {
     private Button btnEye;
     @FXML
     private Button btnMouth;
-    
-    public void initialize(){
-        currentIndex =0;
+
+    public void initialize() {
+        currentIndex = 0;
         faces = Face.loadFaces(App.pathFaces);
         eyes = Eye.loadEyes(App.pathEyes);
         imageViewsFace = new LinkedList<>();
         currentPathFaces = new LinkedList<>();
         currentPathEyes = new LinkedList<>();
-        currentPathMouths= new LinkedList<>();
-        mouths =  Mouth.loadMouths(App.pathMouths);
+        currentPathMouths = new LinkedList<>();
+        mouths = Mouth.loadMouths(App.pathMouths);
         imageViewsEye = new LinkedList<>();
         imageViewsMouth = new LinkedList<>();
-        
+
         User.loadUsers();
         Eye.loadEyes(App.pathEyes);
         Face.loadFaces(App.pathFaces);
@@ -111,21 +111,18 @@ public class PrincipalPaneController {
         imageViews.addLast(imgview4);
         imageViews.addLast(imgview5);
         imageViews.addLast(imgview6);
-        
-        
-        initialComponents();
-        
-    }
-    
 
-    
+        initialComponents();
+
+    }
+
     private void initialComponents() {
         faces = Face.loadFaces(App.pathFaces);
         isChangingFace = true;
         //DoublyNodeList<>
         for (int i = 0; i <= 5; i++) {
-            
-            String currentPath = faces.get(i).getPath()+".png";
+
+            String currentPath = faces.get(i).getPath() + ".png";
             try ( FileInputStream input = new FileInputStream(App.fileImagesFaces + currentPath)) {
                 Image img = new Image(input);
                 ImageView imgview = imageViews.get(i);
@@ -139,7 +136,7 @@ public class PrincipalPaneController {
         }
         hBoxImagesContainers.setSpacing(60);
         hBoxImagesContainers.setAlignment(Pos.CENTER);
-        String currentPath = faces.get(0).getPath()+".png";
+        String currentPath = faces.get(0).getPath() + ".png";
         try ( FileInputStream input = new FileInputStream(App.fileImagesFaces + currentPath)) {
             Image img = new Image(input);
             imgViewEmoji.setImage(img);
@@ -149,26 +146,27 @@ public class PrincipalPaneController {
             System.out.println("Error imagen 1");
         }
     }
+
     @FXML
     private void next(ActionEvent event) {
-        if(isChangingFace){
-            for(int i= imageViews.size()-1;i>=0;i--){
+        if (isChangingFace) {
+            for (int i = imageViews.size() - 1; i >= 0; i--) {
                 Face actualFace = currentPathFaces.get(i);
                 System.out.println(actualFace.getPath());
                 Face foundFace = actualFace;
                 for (int j = 0; j < faces.size(); j++) {
-                    if(faces.get(j).getPath().equals(actualFace.getPath())){
+                    if (faces.get(j).getPath().equals(actualFace.getPath())) {
                         foundFace = faces.get(j);
                         break;
                     }
                 }
                 currentPathFaces.set(i, faces.getNode(faces.getIndex(foundFace)).getNext().getContent());
                 ImageView imageView = imageViews.get(i);
-                String currentPath = currentPathFaces.get(i).getPath()+".png";
+                String currentPath = currentPathFaces.get(i).getPath() + ".png";
                 imageViewsFace.set(i, imageView);
                 try ( FileInputStream input = new FileInputStream(App.fileImagesFaces + currentPath)) {
                     Image img = new Image(input);
-                   // ImageView imgview = imageViews.get(i);
+                    // ImageView imgview = imageViews.get(i);
                     imageView.setImage(img);
                     imageView.setFitHeight(50);
                     imageView.setFitWidth(50);
@@ -176,7 +174,7 @@ public class PrincipalPaneController {
                     System.out.println("Error imagen 1");
                 }
             }
-            String currentPath1 = currentPathFaces.get(5).getPath()+".png";
+            String currentPath1 = currentPathFaces.get(5).getPath() + ".png";
             DropShadow borderEffect = new DropShadow();
             borderEffect.setColor(Color.BLACK);
             borderEffect.setRadius(20); // Ajustar el valor para hacer el borde más grueso
@@ -198,24 +196,24 @@ public class PrincipalPaneController {
             } catch (IOException ex) {
                 System.out.println("Error imagen 1");
             }
-        }else if(isChangingEye){
-            for(int i= imageViews.size()-1;i>=0;i--){
+        } else if (isChangingEye) {
+            for (int i = imageViews.size() - 1; i >= 0; i--) {
                 Eye actualEye = currentPathEyes.get(i);
                 System.out.println(actualEye.getPath());
                 Eye foundEye = actualEye;
                 for (int j = 0; j < eyes.size(); j++) {
-                    if(eyes.get(j).getPath().equals(actualEye.getPath())){
+                    if (eyes.get(j).getPath().equals(actualEye.getPath())) {
                         foundEye = eyes.get(j);
                         break;
                     }
                 }
                 currentPathEyes.set(i, eyes.getNode(eyes.getIndex(foundEye)).getNext().getContent());
                 ImageView imageView = imageViews.get(i);
-                String currentPath = currentPathFaces.get(i).getPath()+".png";
+                String currentPath = currentPathFaces.get(i).getPath() + ".png";
                 imageViewsFace.set(i, imageView);
                 try ( FileInputStream input = new FileInputStream(App.fileImagesFaces + currentPath)) {
                     Image img = new Image(input);
-                   // ImageView imgview = imageViews.get(i);
+                    // ImageView imgview = imageViews.get(i);
                     imageView.setImage(img);
                     imageView.setFitHeight(50);
                     imageView.setFitWidth(50);
@@ -223,7 +221,7 @@ public class PrincipalPaneController {
                     System.out.println("Error: image not found");
                 }
             }
-            String currentPath1 = currentPathEyes.get(5).getPath()+".png";
+            String currentPath1 = currentPathEyes.get(5).getPath() + ".png";
             DropShadow borderEffect = new DropShadow();
             borderEffect.setColor(Color.BLACK);
             borderEffect.setRadius(20); // Ajustar el valor para hacer el borde más grueso
@@ -245,23 +243,23 @@ public class PrincipalPaneController {
             } catch (IOException ex) {
                 System.out.println("Error imagen 1");
             }
-        }else if(isChangingMouth){
-            for(int i= imageViews.size()-1;i>=0;i--){
+        } else if (isChangingMouth) {
+            for (int i = imageViews.size() - 1; i >= 0; i--) {
                 Mouth actualMouth = currentPathMouths.get(i);
                 Mouth foundMouth = actualMouth;
                 for (int j = 0; j < mouths.size(); j++) {
-                    if(mouths.get(j).getPath().equals(actualMouth.getPath())){
+                    if (mouths.get(j).getPath().equals(actualMouth.getPath())) {
                         foundMouth = mouths.get(j);
                         break;
                     }
                 }
                 currentPathMouths.set(i, mouths.getNode(mouths.getIndex(foundMouth)).getNext().getContent());
                 ImageView imageView = imageViews.get(i);
-                String currentPath = currentPathMouths.get(i).getPath()+".png";
+                String currentPath = currentPathMouths.get(i).getPath() + ".png";
                 imageViewsMouth.set(i, imageView);
                 try ( FileInputStream input = new FileInputStream(App.fileImagesMouths + currentPath)) {
                     Image img = new Image(input);
-                   // ImageView imgview = imageViews.get(i);
+                    // ImageView imgview = imageViews.get(i);
                     imageView.setImage(img);
                     imageView.setFitHeight(50);
                     imageView.setFitWidth(50);
@@ -269,7 +267,7 @@ public class PrincipalPaneController {
                     System.out.println("Error: image not found");
                 }
             }
-            String currentPath1 = currentPathMouths.get(5).getPath()+".png";
+            String currentPath1 = currentPathMouths.get(5).getPath() + ".png";
             DropShadow borderEffect = new DropShadow();
             borderEffect.setColor(Color.BLACK);
             borderEffect.setRadius(20); // Ajustar el valor para hacer el borde más grueso
@@ -292,18 +290,18 @@ public class PrincipalPaneController {
                 System.out.println("Error imagen 1");
             }
         }
-        
+
     }
 
     @FXML
     private void previous(ActionEvent event) {
-        if(isChangingFace){
-            for(int i= 0;i<imageViews.size();i++){
+        if (isChangingFace) {
+            for (int i = 0; i < imageViews.size(); i++) {
                 Face actualFace = currentPathFaces.get(i);
                 System.out.println(actualFace.getPath());
                 Face foundFace = actualFace;
                 for (int j = 0; j < faces.size(); j++) {
-                    if(faces.get(j).getPath().equals(actualFace.getPath())){
+                    if (faces.get(j).getPath().equals(actualFace.getPath())) {
                         foundFace = faces.get(j);
                         break;
                     }
@@ -312,21 +310,21 @@ public class PrincipalPaneController {
                 System.out.println(faces.getIndex(actualFace));
                 System.out.println(currentPathFaces.get(i).getPath());
                 ImageView imageView = imageViews.get(i);
-                String currentPath = currentPathFaces.get(i).getPath()+".png";
+                String currentPath = currentPathFaces.get(i).getPath() + ".png";
                 imageViewsFace.set(i, imageView);
                 try ( FileInputStream input = new FileInputStream(App.fileImagesFaces + currentPath)) {
                     Image img = new Image(input);
-                   // ImageView imgview = imageViews.get(i);
+                    // ImageView imgview = imageViews.get(i);
                     imageView.setImage(img);
                     imageView.setFitHeight(50);
                     imageView.setFitWidth(50);
                 } catch (IOException ex) {
                     System.out.println("Error imagen 1");
                 }
-               // System.out.println(currentPaths.get(i).toString());
+                // System.out.println(currentPaths.get(i).toString());
                 System.out.println(currentPathFaces.toString());
             }
-            String currentPath1 = currentPathFaces.get(0).getPath()+".png";
+            String currentPath1 = currentPathFaces.get(0).getPath() + ".png";
             DropShadow borderEffect = new DropShadow();
             borderEffect.setColor(Color.BLACK);
             borderEffect.setRadius(20); // Ajustar el valor para hacer el borde más grueso
@@ -351,33 +349,33 @@ public class PrincipalPaneController {
 
             System.out.println(currentPathFaces.toString());
             System.out.println(faces.size());
-        }else if(isChangingEye){
-            for(int i= 0;i<imageViews.size();i++){
+        } else if (isChangingEye) {
+            for (int i = 0; i < imageViews.size(); i++) {
                 Eye actualEye = currentPathEyes.get(i);
                 Eye foundEye = actualEye;
                 for (int j = 0; j < eyes.size(); j++) {
-                    if(eyes.get(j).getPath().equals(actualEye.getPath())){
+                    if (eyes.get(j).getPath().equals(actualEye.getPath())) {
                         foundEye = eyes.get(j);
                         break;
                     }
                 }
                 currentPathEyes.set(i, eyes.getNode(eyes.getIndex(foundEye)).getPrevious().getContent());
                 ImageView imageView = imageViews.get(i);
-                String currentPath = currentPathEyes.get(i).getPath()+".png";
+                String currentPath = currentPathEyes.get(i).getPath() + ".png";
                 imageViewsEye.set(i, imageView);
                 try ( FileInputStream input = new FileInputStream(App.fileImagesEyes + currentPath)) {
                     Image img = new Image(input);
-                   // ImageView imgview = imageViews.get(i);
+                    // ImageView imgview = imageViews.get(i);
                     imageView.setImage(img);
                     imageView.setFitHeight(50);
                     imageView.setFitWidth(50);
                 } catch (IOException ex) {
                     System.out.println("Error imagen 1");
                 }
-               // System.out.println(currentPaths.get(i).toString());
+                // System.out.println(currentPaths.get(i).toString());
                 System.out.println(currentPathEyes.toString());
             }
-            String currentPath1 = currentPathEyes.get(0).getPath()+".png";
+            String currentPath1 = currentPathEyes.get(0).getPath() + ".png";
             DropShadow borderEffect = new DropShadow();
             borderEffect.setColor(Color.BLACK);
             borderEffect.setRadius(20); // Ajustar el valor para hacer el borde más grueso
@@ -398,34 +396,34 @@ public class PrincipalPaneController {
                 timeline.play();
             } catch (IOException ex) {
                 System.out.println("Error imagen 1");
-            }            
-        }else if(isChangingMouth){
-            for(int i= 0;i<imageViews.size();i++){
+            }
+        } else if (isChangingMouth) {
+            for (int i = 0; i < imageViews.size(); i++) {
                 Mouth actualMouth = currentPathMouths.get(i);
                 Mouth foundMouth = actualMouth;
                 for (int j = 0; j < mouths.size(); j++) {
-                    if(mouths.get(j).getPath().equals(actualMouth.getPath())){
+                    if (mouths.get(j).getPath().equals(actualMouth.getPath())) {
                         foundMouth = mouths.get(j);
                         break;
                     }
                 }
                 currentPathMouths.set(i, mouths.getNode(mouths.getIndex(foundMouth)).getPrevious().getContent());
                 ImageView imageView = imageViews.get(i);
-                String currentPath = currentPathMouths.get(i).getPath()+".png";
+                String currentPath = currentPathMouths.get(i).getPath() + ".png";
                 imageViewsMouth.set(i, imageView);
                 try ( FileInputStream input = new FileInputStream(App.fileImagesMouths + currentPath)) {
                     Image img = new Image(input);
-                   // ImageView imgview = imageViews.get(i);
+                    // ImageView imgview = imageViews.get(i);
                     imageView.setImage(img);
                     imageView.setFitHeight(50);
                     imageView.setFitWidth(50);
                 } catch (IOException ex) {
                     System.out.println("Error imagen 1");
                 }
-               // System.out.println(currentPaths.get(i).toString());
+                // System.out.println(currentPaths.get(i).toString());
                 System.out.println(currentPathMouths.toString());
             }
-            String currentPath1 = currentPathMouths.get(0).getPath()+".png";
+            String currentPath1 = currentPathMouths.get(0).getPath() + ".png";
             DropShadow borderEffect = new DropShadow();
             borderEffect.setColor(Color.BLACK);
             borderEffect.setRadius(20); // Ajustar el valor para hacer el borde más grueso
@@ -446,15 +444,15 @@ public class PrincipalPaneController {
                 timeline.play();
             } catch (IOException ex) {
                 System.out.println("Error imagen 1");
-            }    
+            }
         }
-        
+
     }
 
     @FXML
     private void imgViewClick1(MouseEvent event) {
-        if(isChangingFace){
-            String currentPath1 = currentPathFaces.get(0).getPath()+".png";
+        if (isChangingFace) {
+            String currentPath1 = currentPathFaces.get(0).getPath() + ".png";
             DropShadow borderEffect = new DropShadow();
             borderEffect.setColor(Color.BLACK);
             borderEffect.setRadius(20); // Ajustar el valor para hacer el borde más grueso
@@ -476,8 +474,8 @@ public class PrincipalPaneController {
             } catch (IOException ex) {
                 System.out.println("Error imagen 1");
             }
-        }else if(isChangingEye){
-            String currentPath1 = currentPathEyes.get(0).getPath()+".png";
+        } else if (isChangingEye) {
+            String currentPath1 = currentPathEyes.get(0).getPath() + ".png";
             DropShadow borderEffect = new DropShadow();
             borderEffect.setColor(Color.BLACK);
             borderEffect.setRadius(20); // Ajustar el valor para hacer el borde más grueso
@@ -499,8 +497,8 @@ public class PrincipalPaneController {
             } catch (IOException ex) {
                 System.out.println("Error imagen 1");
             }
-        }else if(isChangingMouth){
-            String currentPath1 = currentPathMouths.get(0).getPath()+".png";
+        } else if (isChangingMouth) {
+            String currentPath1 = currentPathMouths.get(0).getPath() + ".png";
             DropShadow borderEffect = new DropShadow();
             borderEffect.setColor(Color.BLACK);
             borderEffect.setRadius(20); // Ajustar el valor para hacer el borde más grueso
@@ -524,14 +522,12 @@ public class PrincipalPaneController {
             }
         }
 
-        
-            
     }
 
     @FXML
     private void imgViewClick2(MouseEvent event) {
-       if(isChangingFace){
-            String currentPath1 = currentPathFaces.get(1).getPath()+".png";
+        if (isChangingFace) {
+            String currentPath1 = currentPathFaces.get(1).getPath() + ".png";
             DropShadow borderEffect = new DropShadow();
             borderEffect.setColor(Color.BLACK);
             borderEffect.setRadius(20); // Ajustar el valor para hacer el borde más grueso
@@ -553,8 +549,8 @@ public class PrincipalPaneController {
             } catch (IOException ex) {
                 System.out.println("Error imagen 1");
             }
-        }else if(isChangingEye){
-            String currentPath1 = currentPathEyes.get(1).getPath()+".png";
+        } else if (isChangingEye) {
+            String currentPath1 = currentPathEyes.get(1).getPath() + ".png";
             DropShadow borderEffect = new DropShadow();
             borderEffect.setColor(Color.BLACK);
             borderEffect.setRadius(20); // Ajustar el valor para hacer el borde más grueso
@@ -576,8 +572,8 @@ public class PrincipalPaneController {
             } catch (IOException ex) {
                 System.out.println("Error imagen 1");
             }
-        }else if(isChangingMouth){
-            String currentPath1 = currentPathMouths.get(1).getPath()+".png";
+        } else if (isChangingMouth) {
+            String currentPath1 = currentPathMouths.get(1).getPath() + ".png";
             DropShadow borderEffect = new DropShadow();
             borderEffect.setColor(Color.BLACK);
             borderEffect.setRadius(20); // Ajustar el valor para hacer el borde más grueso
@@ -604,8 +600,8 @@ public class PrincipalPaneController {
 
     @FXML
     private void imgViewClick3(MouseEvent event) {
-        if(isChangingFace){
-            String currentPath1 = currentPathFaces.get(2).getPath()+".png";
+        if (isChangingFace) {
+            String currentPath1 = currentPathFaces.get(2).getPath() + ".png";
             DropShadow borderEffect = new DropShadow();
             borderEffect.setColor(Color.BLACK);
             borderEffect.setRadius(20); // Ajustar el valor para hacer el borde más grueso
@@ -627,8 +623,8 @@ public class PrincipalPaneController {
             } catch (IOException ex) {
                 System.out.println("Error imagen 1");
             }
-        }else if(isChangingEye){
-            String currentPath1 = currentPathEyes.get(2).getPath()+".png";
+        } else if (isChangingEye) {
+            String currentPath1 = currentPathEyes.get(2).getPath() + ".png";
             DropShadow borderEffect = new DropShadow();
             borderEffect.setColor(Color.BLACK);
             borderEffect.setRadius(20); // Ajustar el valor para hacer el borde más grueso
@@ -650,8 +646,8 @@ public class PrincipalPaneController {
             } catch (IOException ex) {
                 System.out.println("Error imagen 1");
             }
-        }else if(isChangingMouth){
-            String currentPath1 = currentPathMouths.get(2).getPath()+".png";
+        } else if (isChangingMouth) {
+            String currentPath1 = currentPathMouths.get(2).getPath() + ".png";
             DropShadow borderEffect = new DropShadow();
             borderEffect.setColor(Color.BLACK);
             borderEffect.setRadius(20); // Ajustar el valor para hacer el borde más grueso
@@ -678,8 +674,8 @@ public class PrincipalPaneController {
 
     @FXML
     private void imgViewClick4(MouseEvent event) {
-        if(isChangingFace){
-            String currentPath1 = currentPathFaces.get(3).getPath()+".png";
+        if (isChangingFace) {
+            String currentPath1 = currentPathFaces.get(3).getPath() + ".png";
             DropShadow borderEffect = new DropShadow();
             borderEffect.setColor(Color.BLACK);
             borderEffect.setRadius(20); // Ajustar el valor para hacer el borde más grueso
@@ -701,8 +697,8 @@ public class PrincipalPaneController {
             } catch (IOException ex) {
                 System.out.println("Error imagen 1");
             }
-        }else if(isChangingEye){
-            String currentPath1 = currentPathEyes.get(3).getPath()+".png";
+        } else if (isChangingEye) {
+            String currentPath1 = currentPathEyes.get(3).getPath() + ".png";
             DropShadow borderEffect = new DropShadow();
             borderEffect.setColor(Color.BLACK);
             borderEffect.setRadius(20); // Ajustar el valor para hacer el borde más grueso
@@ -724,8 +720,8 @@ public class PrincipalPaneController {
             } catch (IOException ex) {
                 System.out.println("Error imagen 1");
             }
-        }else if(isChangingMouth){
-            String currentPath1 = currentPathMouths.get(3).getPath()+".png";
+        } else if (isChangingMouth) {
+            String currentPath1 = currentPathMouths.get(3).getPath() + ".png";
             DropShadow borderEffect = new DropShadow();
             borderEffect.setColor(Color.BLACK);
             borderEffect.setRadius(20); // Ajustar el valor para hacer el borde más grueso
@@ -752,8 +748,8 @@ public class PrincipalPaneController {
 
     @FXML
     private void imgViewClick5(MouseEvent event) {
-        if(isChangingFace){
-            String currentPath1 = currentPathFaces.get(4).getPath()+".png";
+        if (isChangingFace) {
+            String currentPath1 = currentPathFaces.get(4).getPath() + ".png";
             DropShadow borderEffect = new DropShadow();
             borderEffect.setColor(Color.BLACK);
             borderEffect.setRadius(20); // Ajustar el valor para hacer el borde más grueso
@@ -775,8 +771,8 @@ public class PrincipalPaneController {
             } catch (IOException ex) {
                 System.out.println("Error imagen 1");
             }
-        }else if(isChangingEye){
-            String currentPath1 = currentPathEyes.get(4).getPath()+".png";
+        } else if (isChangingEye) {
+            String currentPath1 = currentPathEyes.get(4).getPath() + ".png";
             DropShadow borderEffect = new DropShadow();
             borderEffect.setColor(Color.BLACK);
             borderEffect.setRadius(20); // Ajustar el valor para hacer el borde más grueso
@@ -798,8 +794,8 @@ public class PrincipalPaneController {
             } catch (IOException ex) {
                 System.out.println("Error imagen 1");
             }
-        }else if(isChangingMouth){
-            String currentPath1 = currentPathMouths.get(4).getPath()+".png";
+        } else if (isChangingMouth) {
+            String currentPath1 = currentPathMouths.get(4).getPath() + ".png";
             DropShadow borderEffect = new DropShadow();
             borderEffect.setColor(Color.BLACK);
             borderEffect.setRadius(20); // Ajustar el valor para hacer el borde más grueso
@@ -822,13 +818,13 @@ public class PrincipalPaneController {
                 System.out.println("Error imagen 1");
             }
         }
-        
+
     }
 
     @FXML
     private void imgViewClick6(MouseEvent event) {
-       if(isChangingFace){
-            String currentPath1 = currentPathFaces.get(5).getPath()+".png";
+        if (isChangingFace) {
+            String currentPath1 = currentPathFaces.get(5).getPath() + ".png";
             DropShadow borderEffect = new DropShadow();
             borderEffect.setColor(Color.BLACK);
             borderEffect.setRadius(20); // Ajustar el valor para hacer el borde más grueso
@@ -850,8 +846,8 @@ public class PrincipalPaneController {
             } catch (IOException ex) {
                 System.out.println("Error imagen 1");
             }
-        }else if(isChangingEye){
-            String currentPath1 = currentPathEyes.get(5).getPath()+".png";
+        } else if (isChangingEye) {
+            String currentPath1 = currentPathEyes.get(5).getPath() + ".png";
             DropShadow borderEffect = new DropShadow();
             borderEffect.setColor(Color.BLACK);
             borderEffect.setRadius(20); // Ajustar el valor para hacer el borde más grueso
@@ -873,8 +869,8 @@ public class PrincipalPaneController {
             } catch (IOException ex) {
                 System.out.println("Error imagen 1");
             }
-        }else if(isChangingMouth){
-            String currentPath1 = currentPathMouths.get(5).getPath()+".png";
+        } else if (isChangingMouth) {
+            String currentPath1 = currentPathMouths.get(5).getPath() + ".png";
             DropShadow borderEffect = new DropShadow();
             borderEffect.setColor(Color.BLACK);
             borderEffect.setRadius(20); // Ajustar el valor para hacer el borde más grueso
@@ -905,8 +901,8 @@ public class PrincipalPaneController {
         isChangingEye = false;
         isChangingMouth = false;
         for (int i = 0; i <= 5; i++) {
-            
-            String currentPath = faces.get(i).getPath()+".png";
+
+            String currentPath = faces.get(i).getPath() + ".png";
             try ( FileInputStream input = new FileInputStream(App.fileImagesFaces + currentPath)) {
                 Image img = new Image(input);
                 ImageView imgview = imageViews.get(i);
@@ -919,7 +915,7 @@ public class PrincipalPaneController {
         }
         hBoxImagesContainers.setSpacing(60);
         hBoxImagesContainers.setAlignment(Pos.CENTER);
-        String currentPath = faces.get(0).getPath()+".png";
+        String currentPath = faces.get(0).getPath() + ".png";
         try ( FileInputStream input = new FileInputStream(App.fileImagesFaces + currentPath)) {
             Image img = new Image(input);
             imgViewEmoji.setImage(img);
@@ -932,12 +928,12 @@ public class PrincipalPaneController {
 
     @FXML
     private void btnEyeClick(ActionEvent event) {
-        isChangingFace=false;
+        isChangingFace = false;
         isChangingEye = true;
         isChangingMouth = false;
         for (int i = 0; i <= 5; i++) {
-            
-            String currentPath = eyes.get(i).getPath()+".png";
+
+            String currentPath = eyes.get(i).getPath() + ".png";
             try ( FileInputStream input = new FileInputStream(App.fileImagesEyes + currentPath)) {
                 Image img = new Image(input);
                 ImageView imgview = imageViews.get(i);
@@ -950,7 +946,7 @@ public class PrincipalPaneController {
         }
         hBoxImagesContainers.setSpacing(60);
         hBoxImagesContainers.setAlignment(Pos.CENTER);
-        String currentPath = eyes.get(0).getPath()+".png";
+        String currentPath = eyes.get(0).getPath() + ".png";
         try ( FileInputStream input = new FileInputStream(App.fileImagesMouths + currentPath)) {
             Image img = new Image(input);
             imgViewEyes.setImage(img);
@@ -963,12 +959,12 @@ public class PrincipalPaneController {
 
     @FXML
     private void btnMouthClick(ActionEvent event) {
-        isChangingFace=false;
+        isChangingFace = false;
         isChangingEye = false;
         isChangingMouth = true;
         for (int i = 0; i <= 5; i++) {
-            
-            String currentPath = mouths.get(i).getPath()+".png";
+
+            String currentPath = mouths.get(i).getPath() + ".png";
             try ( FileInputStream input = new FileInputStream(App.fileImagesMouths + currentPath)) {
                 Image img = new Image(input);
                 ImageView imgview = imageViews.get(i);
@@ -981,7 +977,7 @@ public class PrincipalPaneController {
         }
         hBoxImagesContainers.setSpacing(60);
         hBoxImagesContainers.setAlignment(Pos.CENTER);
-        String currentPath = mouths.get(0).getPath()+".png";
+        String currentPath = mouths.get(0).getPath() + ".png";
         try ( FileInputStream input = new FileInputStream(App.fileImagesMouths + currentPath)) {
             Image img = new Image(input);
             imgViewMouth.setImage(img);
@@ -990,8 +986,7 @@ public class PrincipalPaneController {
         } catch (IOException ex) {
             System.out.println("Error imagen 1");
         }
-    
+
     }
 
-    
 }

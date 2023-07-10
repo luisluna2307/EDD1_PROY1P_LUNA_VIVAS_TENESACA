@@ -30,12 +30,13 @@ public class LoginController {
     @FXML
     private Button signupButton;
     private User loggedInUser;
-    
-    public void initialize(){
+
+    public void initialize() {
         User.loadUsers();
     }
+
     @FXML
-    private void login() throws IOException{
+    private void login() throws IOException {
         String usuario = txtUserName.getText();
         String contraseña = txtPassword.getText();
         if (correctAcccount(usuario, contraseña)) {
@@ -67,10 +68,9 @@ public class LoginController {
         stage.setScene(scene);
         stage.show();
     }
-    
-    
+
     private boolean correctAcccount(String usuario, String contraseña) {
-        ArrayList<User> users= User.loadUsers();
+        ArrayList<User> users = User.loadUsers();
         for (User user : users) {
             if ((user.getUser().equals(usuario)) && (user.getPassword().equals(contraseña))) {
                 loggedInUser = user;
@@ -80,7 +80,4 @@ public class LoginController {
         return false;
     }
 
-    
-
-    
 }

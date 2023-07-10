@@ -6,7 +6,9 @@ package modelo;
 
 import controladores.App;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import tdas.ArrayList;
 
@@ -15,6 +17,7 @@ import tdas.ArrayList;
  * @author DELL
  */
 public class User {
+
     private String user;
     private String password;
     private String proyectos;
@@ -23,8 +26,6 @@ public class User {
         this.user = user;
         this.password = password;
     }
-    
-    
 
     public String getUser() {
         return user;
@@ -49,6 +50,7 @@ public class User {
     public void setProyectos(String proyectos) {
         this.proyectos = proyectos;
     }
+
     public static ArrayList<User> loadUsers() {
         ArrayList<User> cuentas = new ArrayList();
         try ( BufferedReader br = new BufferedReader(new FileReader(App.filePathUsers + "users.txt"))) {
@@ -65,5 +67,37 @@ public class User {
         }
         return cuentas;
     }
-    
+
+    public static boolean verifyUser(ArrayList<User> userList, String user, String pass) {
+        boolean found = false;
+        for (User u : userList) {
+            if (u.getUser().equals(user) && u.getPassword().equals(pass)) {
+                found = true;
+            }
+        }
+        return found;
+    }
+
+    public static User returnUser(ArrayList<User> userList, String user, String pass) {
+        User usuario = null;
+        for (User u : userList) {
+            if (u.getUser().equals(user) && u.getPassword().equals(pass)) {
+                usuario = u;
+            }
+        }
+        return usuario;
+    }
+
+    private boolean registerUser(String username, String password) {
+
+        try ( BufferedWriter bw = new BufferedWriter(new FileWriter(App.filePathUsers + "users.txt", true))) {
+            bw.write(username + "," + password);
+            return true;
+        } catch (IOException e) {
+            System.out.println("No se pudo registrar a este nuevo usuario");
+            return false;
+        }
+
+    }
+
 }
