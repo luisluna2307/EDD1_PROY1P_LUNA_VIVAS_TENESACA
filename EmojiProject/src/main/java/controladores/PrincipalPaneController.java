@@ -364,7 +364,7 @@ public class PrincipalPaneController {
             ImageView imgview = imageViews.get(i);
             String currentPath = faces.get(i).getPath() + ".png";
             try ( FileInputStream input = new FileInputStream(App.fileImagesFaces + currentPath)) {
-                setImagesViews(input,  imgViewMouth, 50, 50);
+                setImagesViews(input,  imgview, 50, 50);
             } catch (IOException ex) {
                 System.out.println("Error imagen 1");
             }
@@ -477,7 +477,7 @@ public class PrincipalPaneController {
 
     @FXML
     private void btnDeleteMouthClick(ActionEvent event) {
-        imgViewMouth.setImage(null);
+        imgViewMouth.setImage(null); 
     }
 
     @FXML
