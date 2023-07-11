@@ -21,12 +21,16 @@
                </children></HBox>
             <Button fx:id="nextButton" layoutX="1034.0" layoutY="58.0" mnemonicParsing="false" onAction="#next" text="Next" />
             <Button fx:id="previusButton" layoutX="120.0" layoutY="58.0" mnemonicParsing="false" onAction="#previous" text="Previo" />
-            <Button fx:id="btnFace" layoutX="342.0" layoutY="13.0" mnemonicParsing="false" onAction="#btnFaceClick" text="Face" />
-            <Button fx:id="btnEye" layoutX="467.0" layoutY="13.0" mnemonicParsing="false" onAction="#btnEyeClick" text="Eye" />
-            <Button fx:id="btnMouth" layoutX="581.0" layoutY="13.0" mnemonicParsing="false" onAction="#btnMouthClick" text="Mouth" />
-            <Button fx:id="btnDeleteFace" layoutX="388.0" layoutY="13.0" mnemonicParsing="false" onAction="#btnDeleteFaceClick" text="x" />
-            <Button fx:id="btnDeleteMouth" layoutX="644.0" layoutY="13.0" mnemonicParsing="false" onAction="#btnDeleteMouthClick" text="x" />
-            <Button fx:id="btnDeleteEyes" layoutX="510.0" layoutY="13.0" mnemonicParsing="false" onAction="#btnDeleteEyesClick" text="x" />
+            <Button fx:id="btnFace" layoutX="251.0" layoutY="13.0" mnemonicParsing="false" onAction="#btnFaceClick" text="Face" />
+            <Button fx:id="btnEye" layoutX="343.0" layoutY="13.0" mnemonicParsing="false" onAction="#btnEyeClick" text="Eye" />
+            <Button fx:id="btnMouth" layoutX="436.0" layoutY="13.0" mnemonicParsing="false" onAction="#btnMouthClick" text="Mouth" />
+            <Button fx:id="btnDeleteFace" layoutX="291.0" layoutY="13.0" mnemonicParsing="false" onAction="#btnDeleteFaceClick" text="x" />
+            <Button fx:id="btnDeleteMouth" layoutX="488.0" layoutY="13.0" mnemonicParsing="false" onAction="#btnDeleteMouthClick" text="x" />
+            <Button fx:id="btnDeleteEyes" layoutX="377.0" layoutY="13.0" mnemonicParsing="false" onAction="#btnDeleteEyesClick" text="x" />
+            <Button fx:id="btnEyebrows" layoutX="546.0" layoutY="13.0" mnemonicParsing="false" onAction="#btnEyebrowsClick" text="Eyebrows" />
+            <Button fx:id="btnDeleteEyebrows" layoutX="613.0" layoutY="13.0" mnemonicParsing="false" onAction="#btnDeleteEyebrowsClick" text="x" />
+            <Button fx:id="btnAccessories" layoutX="654.0" layoutY="13.0" mnemonicParsing="false" onAction="#btnAccessoriesClick" text="Accessories" />
+            <Button fx:id="btnDeleteAccessories" layoutX="731.0" layoutY="13.0" mnemonicParsing="false" onAction="#btnDeleteAccessoriesClick" text="x" />
              </children>
       </AnchorPane>
    </bottom>
@@ -41,6 +45,8 @@
                   <ImageView fx:id="imgViewEmoji" fitHeight="326.0" fitWidth="335.0" layoutX="-5.0" layoutY="2.0" pickOnBounds="true" preserveRatio="true" />
                   <ImageView fx:id="imgViewMouth" fitHeight="105.0" fitWidth="200.0" layoutX="70.0" layoutY="164.0" pickOnBounds="true" preserveRatio="true" />
                   <ImageView fx:id="imgViewEyes" fitHeight="95.0" fitWidth="200.0" layoutX="65.0" layoutY="43.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="imgViewEyebrows" fitHeight="93.0" fitWidth="200.0" layoutX="70.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="imgViewAccessories" fitHeight="114.0" fitWidth="235.0" layoutX="43.0" layoutY="43.0" pickOnBounds="true" preserveRatio="true" />
                </children>
             </AnchorPane>
          </children></AnchorPane>

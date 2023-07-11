@@ -16,11 +16,15 @@ public class App extends Application {
     private static Scene scene;
     public static String filePathUsers = "src/main/resources/archivos/";
     public static String fileImagesMouths = "src/main/resources/images/mouth/";
+    public static String fileImagesEyebrows = "src/main/resources/images/eyebrows/";
+    public static String fileImagesAccessories = "src/main/resources/images/accessories/";
     public static String fileImagesFaces = "src/main/resources/images/faces/";
     public static String fileImagesEyes = "src/main/resources/images/eyes/";
     public static String pathEyes = "/informacionPredefinida/pathEyes.txt";
     public static String pathMouths = "/informacionPredefinida/pathMouths.txt";
     public static String pathFaces = "/informacionPredefinida/pathFaces.txt";
+    public static String pathEyebrows = "/informacionPredefinida/pathEyebrows.txt";
+    public static String pathAccessories = "/informacionPredefinida/pathAccessories.txt";
     public static String pathInterfaz = "/interfaz/";
 
     @Override

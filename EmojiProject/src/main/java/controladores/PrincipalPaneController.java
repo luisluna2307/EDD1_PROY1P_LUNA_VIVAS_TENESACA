@@ -21,7 +21,9 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import modelo.User;
+import proyecto.Accessories;
 import proyecto.Eye;
+import proyecto.Eyebrow;
 import proyecto.Face;
 import proyecto.Mouth;
 import tdas.CDoublyLinkedList;
@@ -43,17 +45,25 @@ public class PrincipalPaneController {
     private CDoublyLinkedList<Face> faces;
     private CDoublyLinkedList<Mouth> mouths;
     private CDoublyLinkedList<Eye> eyes;
+    private CDoublyLinkedList<Eyebrow> eyebrows;
+    private CDoublyLinkedList<Accessories> accessories;
     private List<ImageView> imageViews;
     private List<ImageView> imageViewsFace;
     private List<ImageView> imageViewsEye;
     private List<ImageView> imageViewsMouth;
+    private List<ImageView> imageViewsEyebrows;
+    private List<ImageView> imageViewsAccessories;
     private LinkedList<Face> currentPathFaces;
     private LinkedList<Mouth> currentPathMouths;
     private LinkedList<Eye> currentPathEyes;
+    private LinkedList<Eyebrow> currentPathEyebrows;
+    private LinkedList<Accessories> currentPathAccessories;
     private int currentIndex;
     private boolean isChangingFace;
     private boolean isChangingEye;
     private boolean isChangingMouth;
+    private boolean isChangingAccessories;
+    private boolean isChangingEyebrows;
     @FXML
     private ImageView imgViewEmoji;
     @FXML
@@ -85,24 +95,43 @@ public class PrincipalPaneController {
     @FXML
     private Button btnDeleteEyes;
     @FXML
-    private ImageView imgViewEyes1;
+    private Button btnEyebrows;
+    @FXML
+    private Button btnDeleteEyebrows;
+    @FXML
+    private Button btnAccessories;
+    @FXML
+    private Button btnDeleteAccessories;
+    @FXML
+    private ImageView imgViewEyebrows;
+    @FXML
+    private ImageView imgViewAccessories;
 
     public void initialize() {
         currentIndex = 0;
         faces = Face.loadFaces(App.pathFaces);
         eyes = Eye.loadEyes(App.pathEyes);
+        mouths = Mouth.loadMouths(App.pathMouths);
+        eyebrows = Eyebrow.loadEyebrows(App.pathEyebrows);
+        accessories = Accessories.loadAccessories(App.pathAccessories);
+        
         imageViewsFace = new LinkedList<>();
+        imageViewsEye = new LinkedList<>();
+        imageViewsMouth = new LinkedList<>();
+        imageViewsEyebrows =  new LinkedList<>();
+        imageViewsAccessories = new LinkedList<>();
         currentPathFaces = new LinkedList<>();
         currentPathEyes = new LinkedList<>();
         currentPathMouths = new LinkedList<>();
-        mouths = Mouth.loadMouths(App.pathMouths);
-        imageViewsEye = new LinkedList<>();
-        imageViewsMouth = new LinkedList<>();
+        currentPathEyebrows = new LinkedList();
+        currentPathAccessories = new LinkedList<>();
 
         User.loadUsers();
         Eye.loadEyes(App.pathEyes);
         Face.loadFaces(App.pathFaces);
         Mouth.loadMouths(App.pathMouths);
+        Eyebrow.loadEyebrows(App.pathEyebrows);
+        Accessories.loadAccessories(App.pathAccessories);
         imageViews = new LinkedList<>();
         for (int i = 0; i <= 5; i++) {
             currentPathFaces.addLast(faces.get(i));
@@ -112,6 +141,12 @@ public class PrincipalPaneController {
         }
         for (int i = 0; i <= 5; i++) {
             currentPathMouths.addLast(mouths.get(i));
+        }
+        for (int i = 0; i <= 5; i++) {
+            currentPathEyebrows.addLast(eyebrows.get(i));
+        }
+        for (int i = 0; i <= 5; i++) {
+            currentPathAccessories.addLast(accessories.get(i));
         }
         imageViews.addLast(imgview1);
         imageViews.addLast(imgview2);
@@ -232,6 +267,60 @@ public class PrincipalPaneController {
             } catch (IOException ex) {
                 System.out.println("Error imagen 1");
             }
+        } else if (isChangingEyebrows) {
+            for (int i = imageViews.size() - 1; i >= 0; i--) {
+                Eyebrow actualEyebrow = currentPathEyebrows.get(i);
+                Eyebrow foundEyebrow = actualEyebrow;
+                for (int j = 0; j < eyebrows.size(); j++) {
+                    if (eyebrows.get(j).getPath().equals(actualEyebrow.getPath())) {
+                        foundEyebrow = eyebrows.get(j);
+                        break;
+                    }
+                }
+                currentPathEyebrows.set(i, eyebrows.getNode(eyebrows.getIndex(foundEyebrow)).getNext().getContent());
+                ImageView imageView = imageViews.get(i);
+                String currentPath = currentPathEyebrows.get(i).getPath() + ".png";
+                imageViewsEyebrows.set(i, imageView);
+                try ( FileInputStream input = new FileInputStream(App.fileImagesEyebrows + currentPath)) {
+                    setImagesViews(input, imageView, 50, 50);
+                } catch (IOException ex) {
+                    System.out.println("Error: image not found");
+                }
+            }
+            String currentPath1 = currentPathEyebrows.get(5).getPath() + ".png";
+            setDropShadow(imgview6);
+            try ( FileInputStream input = new FileInputStream(App.fileImagesEyebrows + currentPath1)) {
+                setImagesViews(input, imgViewEyebrows, 150, 150);
+            } catch (IOException ex) {
+                System.out.println("Error imagen 1");
+            }
+        } else if (isChangingAccessories) {
+            for (int i = imageViews.size() - 1; i >= 0; i--) {
+                Accessories actualAccessories = currentPathAccessories.get(i);
+                Accessories foundAccessorie = actualAccessories;
+                for (int j = 0; j < accessories.size(); j++) {
+                    if (accessories.get(j).getPath().equals(actualAccessories.getPath())) {
+                        foundAccessorie = accessories.get(j);
+                        break;
+                    }
+                }
+                currentPathAccessories.set(i, accessories.getNode(accessories.getIndex(foundAccessorie)).getNext().getContent());
+                ImageView imageView = imageViews.get(i);
+                String currentPath = currentPathAccessories.get(i).getPath() + ".png";
+                imageViewsAccessories.set(i, imageView);
+                try ( FileInputStream input = new FileInputStream(App.fileImagesAccessories + currentPath)) {
+                    setImagesViews(input, imageView, 50, 50);
+                } catch (IOException ex) {
+                    System.out.println("Error: image not found");
+                }
+            }
+            String currentPath1 = currentPathAccessories.get(5).getPath() + ".png";
+            setDropShadow(imgview6);
+            try ( FileInputStream input = new FileInputStream(App.fileImagesAccessories + currentPath1)) {
+                setImagesViews(input, imgViewAccessories, 150, 150);
+            } catch (IOException ex) {
+                System.out.println("Error imagen 1");
+            }
         }
 
     }
@@ -326,6 +415,64 @@ public class PrincipalPaneController {
             } catch (IOException ex) {
                 System.out.println("Error imagen 1");
             }
+        } else if (isChangingAccessories) {
+            for (int i = 0; i < imageViews.size(); i++) {
+                Accessories actualAccessories = currentPathAccessories.get(i);
+                Accessories foundAccessorie = actualAccessories;
+                for (int j = 0; j < accessories.size(); j++) {
+                    if (accessories.get(j).getPath().equals(actualAccessories.getPath())) {
+                        foundAccessorie = accessories.get(j);
+                        break;
+                    }
+                }
+                currentPathAccessories.set(i, accessories.getNode(accessories.getIndex(foundAccessorie)).getPrevious().getContent());
+                ImageView imageView = imageViews.get(i);
+                String currentPath = currentPathAccessories.get(i).getPath() + ".png";
+                imageViewsAccessories.set(i, imageView);
+                try ( FileInputStream input = new FileInputStream(App.fileImagesAccessories + currentPath)) {
+                    setImagesViews(input, imageView, 50, 50);
+                } catch (IOException ex) {
+                    System.out.println("Error imagen 1");
+                }
+                // System.out.println(currentPaths.get(i).toString());
+                System.out.println(currentPathAccessories.toString());
+            }
+            String currentPath1 = currentPathAccessories.get(0).getPath() + ".png";
+            setDropShadow(imgview1);
+            try ( FileInputStream input = new FileInputStream(App.fileImagesAccessories + currentPath1)) {
+                setImagesViews(input, imgViewAccessories, 150, 150);
+            } catch (IOException ex) {
+                System.out.println("Error imagen 1");
+            }
+        }else if (isChangingEyebrows) {
+            for (int i = 0; i < imageViews.size(); i++) {
+                Eyebrow actualEyebrows = currentPathEyebrows.get(i);
+                Eyebrow foundEyebrows = actualEyebrows;
+                for (int j = 0; j < eyebrows.size(); j++) {
+                    if (eyebrows.get(j).getPath().equals(actualEyebrows.getPath())) {
+                        foundEyebrows = eyebrows.get(j);
+                        break;
+                    }
+                }
+                currentPathEyebrows.set(i, eyebrows.getNode(eyebrows.getIndex(foundEyebrows)).getPrevious().getContent());
+                ImageView imageView = imageViews.get(i);
+                String currentPath = currentPathEyebrows.get(i).getPath() + ".png";
+                imageViewsEyebrows.set(i, imageView);
+                try ( FileInputStream input = new FileInputStream(App.fileImagesEyebrows + currentPath)) {
+                    setImagesViews(input, imageView, 50, 50);
+                } catch (IOException ex) {
+                    System.out.println("Error imagen 1");
+                }
+                // System.out.println(currentPaths.get(i).toString());
+                System.out.println(currentPathEyebrows.toString());
+            }
+            String currentPath1 = currentPathEyebrows.get(0).getPath() + ".png";
+            setDropShadow(imgview1);
+            try ( FileInputStream input = new FileInputStream(App.fileImagesEyebrows + currentPath1)) {
+                setImagesViews(input, imgViewEyebrows, 150, 150);
+            } catch (IOException ex) {
+                System.out.println("Error imagen 1");
+            }
         }
 
     }
@@ -365,6 +512,8 @@ public class PrincipalPaneController {
         isChangingFace = true;
         isChangingEye = false;
         isChangingMouth = false;
+        isChangingEyebrows = false;
+        isChangingAccessories = false;
         for (int i = 0; i <= 5; i++) {
             ImageView imgview = imageViews.get(i);
             String currentPath = faces.get(i).getPath() + ".png";
@@ -387,6 +536,8 @@ public class PrincipalPaneController {
         isChangingFace = false;
         isChangingEye = true;
         isChangingMouth = false;
+        isChangingEyebrows = false;
+        isChangingAccessories = false;
         for (int i = 0; i <= 5; i++) {
             ImageView imgview = imageViews.get(i);
             String currentPath = eyes.get(i).getPath() + ".png";
@@ -409,6 +560,8 @@ public class PrincipalPaneController {
         isChangingFace = false;
         isChangingEye = false;
         isChangingMouth = true;
+        isChangingEyebrows = false;
+        isChangingAccessories = false;
         for (int i = 0; i <= 5; i++) {
             ImageView imgview = imageViews.get(i);
             String currentPath = mouths.get(i).getPath() + ".png";
@@ -426,7 +579,55 @@ public class PrincipalPaneController {
         }
 
     }
-
+    
+    @FXML
+    private void btnEyebrowsClick(ActionEvent event) {
+        isChangingFace = false;
+        isChangingEye = false;
+        isChangingMouth = false;
+        isChangingEyebrows = true;
+        isChangingAccessories = false;
+        for (int i = 0; i <= 5; i++) {
+            ImageView imgview = imageViews.get(i);
+            String currentPath = eyebrows.get(i).getPath() + ".png";
+            try ( FileInputStream input = new FileInputStream(App.fileImagesEyebrows + currentPath)) {
+                setImagesViews(input, imgview, 50, 50);
+            } catch (IOException ex) {
+                System.out.println("Error imagen 1");
+            }
+        }
+        String currentPath = eyebrows.get(0).getPath() + ".png";
+        try ( FileInputStream input = new FileInputStream(App.fileImagesEyebrows + currentPath)) {
+            setImagesViews(input, imgViewEyebrows, 150, 150);
+        } catch (IOException ex) {
+            System.out.println("Error imagen 1");
+        }
+    }
+    @FXML
+    private void btnAccessoriesClick(ActionEvent event) {
+        isChangingFace = false;
+        isChangingEye = false;
+        isChangingMouth = false;
+        isChangingEyebrows = false;
+        isChangingAccessories = true;
+        for (int i = 0; i <= 5; i++) {
+            ImageView imgview = imageViews.get(i);
+            String currentPath = accessories.get(i).getPath() + ".png";
+            try ( FileInputStream input = new FileInputStream(App.fileImagesAccessories + currentPath)) {
+                setImagesViews(input, imgview, 50, 50);
+            } catch (IOException ex) {
+                System.out.println("Error imagen 1");
+            }
+        }
+        String currentPath = accessories.get(0).getPath() + ".png";
+        try ( FileInputStream input = new FileInputStream(App.fileImagesAccessories + currentPath)) {
+            setImagesViews(input, imgViewAccessories, 150, 150);
+        } catch (IOException ex) {
+            System.out.println("Error imagen 1");
+        }
+    }
+    
+    
     private void imagesViewsClick(int actualIndex, ImageView imgView) {
         if (isChangingFace) {
             String currentPath1 = currentPathFaces.get(actualIndex).getPath() + ".png";
@@ -449,6 +650,22 @@ public class PrincipalPaneController {
             setDropShadow(imgView);
             try ( FileInputStream input = new FileInputStream(App.fileImagesMouths + currentPath1)) {
                 setImagesViews(input, imgViewMouth, 150, 150);
+            } catch (IOException ex) {
+                System.out.println("Error imagen 1");
+            }
+        } else if( isChangingEyebrows){
+            String currentPath1 = currentPathEyebrows.get(actualIndex).getPath() + ".png";
+            setDropShadow(imgView);
+            try ( FileInputStream input = new FileInputStream(App.fileImagesEyebrows + currentPath1)) {
+                setImagesViews(input, imgViewEyebrows, 150, 150);
+            } catch (IOException ex) {
+                System.out.println("Error imagen 1");
+            }
+        }else if(isChangingAccessories){
+            String currentPath1 = currentPathAccessories.get(actualIndex).getPath() + ".png";
+            setDropShadow(imgView);
+            try ( FileInputStream input = new FileInputStream(App.fileImagesAccessories + currentPath1)) {
+                setImagesViews(input, imgViewAccessories, 150, 150);
             } catch (IOException ex) {
                 System.out.println("Error imagen 1");
             }
@@ -491,6 +708,19 @@ public class PrincipalPaneController {
     @FXML
     private void btnDeleteEyesClick(ActionEvent event) {
         imgViewEyes.setImage(null);
+    }
+
+    
+
+    @FXML
+    private void btnDeleteEyebrowsClick(ActionEvent event) {
+        
+    }
+
+    
+
+    @FXML
+    private void btnDeleteAccessoriesClick(ActionEvent event) {
     }
 
 }
