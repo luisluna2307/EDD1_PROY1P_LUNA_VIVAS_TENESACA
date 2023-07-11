@@ -11,12 +11,12 @@ package tdas;
  * @param <E>
  */
 public class DoublyNodeList<E> {
-    
+
     private E content;
     private DoublyNodeList<E> next;
     private DoublyNodeList<E> previous;
-    
-    public DoublyNodeList(E content){
+
+    public DoublyNodeList(E content) {
         this.content = content;
         next = null;
         previous = null;
@@ -37,7 +37,7 @@ public class DoublyNodeList<E> {
     public void setNext(DoublyNodeList<E> next) {
         this.next = next;
     }
-    
+
     public DoublyNodeList<E> getPrevious() {
         return previous;
     }
@@ -45,5 +45,5 @@ public class DoublyNodeList<E> {
     public void setPrevious(DoublyNodeList<E> previous) {
         this.previous = previous;
     }
-    
+
 }

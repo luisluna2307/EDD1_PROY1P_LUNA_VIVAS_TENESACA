@@ -1,6 +1,7 @@
 package tdas;
 
 public class NodeList<E> {
+
     private E content;
     private NodeList<E> next;
 
@@ -23,6 +24,5 @@ public class NodeList<E> {
     public void setNext(NodeList<E> next) {
         this.next = next;
     }
-    
-    
+
 }

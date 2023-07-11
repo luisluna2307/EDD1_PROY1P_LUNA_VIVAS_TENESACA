@@ -3,7 +3,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package tdas;
+
 import java.util.Iterator;
+
 /**
  *
  * @author DELL
@@ -131,7 +133,7 @@ public class ArrayList<E> implements List<E> {
     @Override
     public E remove(int index) {
         E elementToRemove = null;
-        if (this.isEmpty() || index >= this.effectiveSize || index<0) {
+        if (this.isEmpty() || index >= this.effectiveSize || index < 0) {
             throw new IndexOutOfBoundsException();
         } else {
             elementToRemove = elements[index];
@@ -161,64 +163,66 @@ public class ArrayList<E> implements List<E> {
         elements[index] = element;
         return oldElement;
     }
-    
-    
+
     public boolean swap(int pos1, int pos2) {
-        
-        if (isEmpty()){
+
+        if (isEmpty()) {
             return false;
         }
 
-        if (pos1 > effectiveSize || pos2 > effectiveSize){
+        if (pos1 > effectiveSize || pos2 > effectiveSize) {
             return false;
         }
-        
+
         E elemento1 = this.get(pos1);
-        
+
         E elemento2 = this.get(pos2);
-        
+
         E temp = elemento2;
-        
+
         this.set(pos2, elemento1);
-        
+
         this.set(pos1, temp);
-        
+
         return true;
-        
+
     }
-    
-    
-    public boolean reverse(){
-        
-        if (this.isEmpty()){
+
+    public boolean reverse() {
+
+        if (this.isEmpty()) {
             return false;
         }
-        
-        
+
         ArrayList<E> aux = new ArrayList<E>();
 
-        for (int i = this.effectiveSize-1; i > -1; i--){
+        for (int i = this.effectiveSize - 1; i > -1; i--) {
             aux.addLast(this.elements[i]);
         }
-        
-        for (int i=0;i<aux.effectiveSize;i++){
+
+        for (int i = 0; i < aux.effectiveSize; i++) {
             this.elements[i] = aux.get(i);
         }
-        
+
         return true;
-        
+
     }
-    
+
     @Override
     public int indexOf(E e) {
-        if(e == null) return -2;
-        if(isEmpty()) return -1;
-        if(e == elements[effectiveSize]) 
-            return size()-1;
-        int index=0;
-        if(!isEmpty()){
-            for(int i = 0;i<effectiveSize;i++){
-                if(elements[i].equals(e)){
+        if (e == null) {
+            return -2;
+        }
+        if (isEmpty()) {
+            return -1;
+        }
+        if (e == elements[effectiveSize]) {
+            return size() - 1;
+        }
+        int index = 0;
+        if (!isEmpty()) {
+            for (int i = 0; i < effectiveSize; i++) {
+                if (elements[i].equals(e)) {
                     index = i;
                     return i;
                 }
@@ -226,32 +230,36 @@ public class ArrayList<E> implements List<E> {
         }
         return -2;
     }
+
     public boolean contains(E e) {
         return indexOf(e) >= 0;
     }
 
     @Override
     public Iterator<E> iterator() {
-        if(isEmpty()) return null;
-        return new Iterator<E>(){
-            int cursor =0;
-            
+        if (isEmpty()) {
+            return null;
+        }
+        return new Iterator<E>() {
+            int cursor = 0;
+
             @Override
-            public boolean hasNext(){
-                return cursor<effectiveSize;
+            public boolean hasNext() {
+                return cursor < effectiveSize;
             }
+
             @Override
             public E next() {
-                if(hasNext()){
+                if (hasNext()) {
                     E element = elements[cursor];
                     cursor++;
                     return element;
                 }
                 return null;
             }
-        
+
         };
-    
+
     }
-    
+
 }

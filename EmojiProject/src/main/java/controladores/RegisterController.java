@@ -56,13 +56,13 @@ public class RegisterController implements Initializable {
 
         if (username.isEmpty() || pass.isEmpty() || confirmPass.isEmpty()) {
             showAlert("Porfavor, llenar todos los campos");
-        }
-        if (!pass.equals(confirmPass)) {
+        } else if (!pass.equals(confirmPass)) {
             showAlert("No coinciden las contraseñas");
-        }
+        } else {
+            showAlert("Usuario ha sido registrado con exito");
+            clear();
 
-        showAlert("Usuario ha sido registrado con exito");
-        clear();
+        }
     }
 
     private void showAlert(String m) {

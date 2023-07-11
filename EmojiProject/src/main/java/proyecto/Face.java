@@ -15,6 +15,7 @@ import tdas.CDoublyLinkedList;
  * @author DELL
  */
 public class Face {
+
     String path;
 
     public Face(String path) {
@@ -28,21 +29,21 @@ public class Face {
     public void setPath(String path) {
         this.path = path;
     }
-    
-    public static CDoublyLinkedList<Face> loadFaces(String path){
+
+    public static CDoublyLinkedList<Face> loadFaces(String path) {
         CDoublyLinkedList<Face> faces = new CDoublyLinkedList<>();
-        
-        try (BufferedReader br = new BufferedReader(new FileReader("src/main/resources/informacionPredefinida/pathFaces.txt"))) {
+
+        try ( BufferedReader br = new BufferedReader(new FileReader("src/main/resources/informacionPredefinida/pathFaces.txt"))) {
             String sCurrentLine;
             while ((sCurrentLine = br.readLine()) != null) {
                 Face face = new Face(sCurrentLine);
                 faces.addLast(face);
-               // System.out.println(sCurrentLine);
+                // System.out.println(sCurrentLine);
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
-       // System.out.println(faces);
+        // System.out.println(faces);
         return faces;
     }
 
@@ -50,5 +51,5 @@ public class Face {
     public String toString() {
         return "Face{" + "path=" + path + '}';
     }
-    
+
 }

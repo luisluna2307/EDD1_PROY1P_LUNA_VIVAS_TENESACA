@@ -206,31 +206,30 @@ public class LinkedList<E> implements List<E> {
         return s;
     }
 
+    public boolean swap(int pos1, int pos2) {
 
-    public boolean swap(int pos1, int pos2){
-        
-        if (isEmpty()){
-            return false;            
-        }
-
-        if (first == null || last == null){
+        if (isEmpty()) {
             return false;
         }
-        
-        if(pos1 > this.size() || pos2 > this.size()){
+
+        if (first == null || last == null) {
             return false;
         }
-        
+
+        if (pos1 > this.size() || pos2 > this.size()) {
+            return false;
+        }
+
         NodeList<E> nodeTmp = new NodeList<>(this.get(pos1));
-        
+
         NodeList<E> nodeTmp2 = new NodeList<>(this.get(pos2));
-        
-        if (pos1 == 0){
+
+        if (pos1 == 0) {
             nodeTmp2.setNext(first.getNext());
             first = nodeTmp2;
         }
 
-        if (pos2 == 0){
+        if (pos2 == 0) {
             nodeTmp.setNext(first.getNext());
             first = nodeTmp;
         }
@@ -239,30 +238,30 @@ public class LinkedList<E> implements List<E> {
 
         for (int i = 0; i < this.size(); i++) {
 
-            if (i+1 == pos1 && (n.getNext() != null)){
+            if (i + 1 == pos1 && (n.getNext() != null)) {
                 nodeTmp2.setNext(n.getNext().getNext());
                 n.setNext(nodeTmp2);
             }
-            if (i+1 == pos2 && (n.getNext() != null)){
+            if (i + 1 == pos2 && (n.getNext() != null)) {
                 nodeTmp.setNext(n.getNext().getNext());
                 n.setNext(nodeTmp);
             }
             n = n.getNext();
-            
+
         }
 
         return true;
     }
-    
-    public boolean reverse(){
-        if (this.isEmpty()){
-            return false;            
+
+    public boolean reverse() {
+        if (this.isEmpty()) {
+            return false;
         }
-        
+
         NodeList<E> current = first;
         NodeList<E> previo = null;
         NodeList<E> siguiente = null;
-        
+
         while (current != null) {
             siguiente = current.getNext();
             current.setNext(previo);
@@ -270,42 +269,47 @@ public class LinkedList<E> implements List<E> {
             current = siguiente;
         }
         first = previo;
-        
+
         return true;
     }
 
     @Override
     public Iterator<E> iterator() {
-        if(isEmpty()) return null;
-        return new Iterator<E>(){
-            
+        if (isEmpty()) {
+            return null;
+        }
+        return new Iterator<E>() {
+
             NodeList<E> node = first;
-            
+
             @Override
-            public boolean hasNext(){
+            public boolean hasNext() {
                 return node != null;
             }
-            
 
             @Override
             public E next() {
-                if(hasNext()){
+                if (hasNext()) {
                     E data = node.getContent();
                     node = node.getNext();
                     return data;
                 }
                 return null;
             }
-        
+
         };
     }
 
     @Override
-    public boolean contains(E e){
-        if(isEmpty()) return false;
+    public boolean contains(E e) {
+        if (isEmpty()) {
+            return false;
+        }
         NodeList<E> node = first;
-        while(node!=null){
-            if(e.equals(node.getContent())) return true;
+        while (node != null) {
+            if (e.equals(node.getContent())) {
+                return true;
+            }
             node = node.getNext();
         }
         return false;
@@ -313,32 +317,39 @@ public class LinkedList<E> implements List<E> {
 
     @Override
     public int indexOf(E e) {
-        if(e == null) return -2;
-        if(isEmpty()) return -1;
-        if(e == last.getContent()) return size()-1;
-        
+        if (e == null) {
+            return -2;
+        }
+        if (isEmpty()) {
+            return -1;
+        }
+        if (e == last.getContent()) {
+            return size() - 1;
+        }
+
         NodeList<E> node = first;
         int index = 0;
-        while(node != last){
-            if(node.getContent() == e) return index;
+        while (node != last) {
+            if (node.getContent() == e) {
+                return index;
+            }
             index++;
             node = node.getNext();
         }
-        
+
         return -2;
     }
 
     /* Metodo reverse Iterator */
-
-    public Iterator<E> reverseIterator(){
-        if(this.isEmpty()){
+    public Iterator<E> reverseIterator() {
+        if (this.isEmpty()) {
             return null;
         }
 
         Iterator<E> itAux = this.iterator();
         LinkedList<E> lAux = new LinkedList<>();
 
-        while(itAux.hasNext()){
+        while (itAux.hasNext()) {
             lAux.addFirst(itAux.next());
         }
 
@@ -346,12 +357,12 @@ public class LinkedList<E> implements List<E> {
             NodeList<E> node = lAux.first;
 
             @Override
-            public boolean hasNext(){
+            public boolean hasNext() {
                 return node != null;
             }
 
             @Override
-            public E next(){
+            public E next() {
                 if (hasNext()) {
                     E data = node.getContent();
                     node = node.getNext();
@@ -361,6 +372,5 @@ public class LinkedList<E> implements List<E> {
             }
         };
     }
-
 
 }

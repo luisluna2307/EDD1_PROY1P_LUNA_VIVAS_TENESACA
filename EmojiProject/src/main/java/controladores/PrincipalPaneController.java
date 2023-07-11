@@ -132,7 +132,7 @@ public class PrincipalPaneController {
             ImageView imgview = imageViews.get(i);
             try ( FileInputStream input = new FileInputStream(App.fileImagesFaces + currentPath)) {
                 imageViewsFace.addLast(imgview);
-                setImagesViews(input, imgview,50,50);
+                setImagesViews(input, imgview, 50, 50);
             } catch (IOException ex) {
                 System.out.println("Error imagen 1");
             }
@@ -141,7 +141,7 @@ public class PrincipalPaneController {
         hBoxImagesContainers.setAlignment(Pos.CENTER);
         String currentPath = faces.get(0).getPath() + ".png";
         try ( FileInputStream input = new FileInputStream(App.fileImagesFaces + currentPath)) {
-            setImagesViews(input,  imgViewEmoji, 300, 300);
+            setImagesViews(input, imgViewEmoji, 300, 300);
         } catch (IOException ex) {
             System.out.println("Error imagen 1");
         }
@@ -165,7 +165,7 @@ public class PrincipalPaneController {
                 String currentPath = currentPathFaces.get(i).getPath() + ".png";
                 imageViewsFace.set(i, imageView);
                 try ( FileInputStream input = new FileInputStream(App.fileImagesFaces + currentPath)) {
-                    setImagesViews(input,  imageView, 50, 50);
+                    setImagesViews(input, imageView, 50, 50);
                 } catch (IOException ex) {
                     System.out.println("Error imagen 1");
                 }
@@ -173,7 +173,7 @@ public class PrincipalPaneController {
             String currentPath1 = currentPathFaces.get(5).getPath() + ".png";
             setDropShadow(imgview6);
             try ( FileInputStream input = new FileInputStream(App.fileImagesFaces + currentPath1)) {
-                setImagesViews(input,  imgViewEmoji, 300, 300);
+                setImagesViews(input, imgViewEmoji, 300, 300);
             } catch (IOException ex) {
                 System.out.println("Error imagen 1");
             }
@@ -193,7 +193,7 @@ public class PrincipalPaneController {
                 String currentPath = currentPathEyes.get(i).getPath() + ".png";
                 imageViewsEye.set(i, imageView);
                 try ( FileInputStream input = new FileInputStream(App.fileImagesEyes + currentPath)) {
-                    setImagesViews(input,  imageView, 50, 50);
+                    setImagesViews(input, imageView, 50, 50);
                 } catch (IOException ex) {
                     System.out.println("Error: image not found");
                 }
@@ -201,7 +201,7 @@ public class PrincipalPaneController {
             String currentPath1 = currentPathEyes.get(5).getPath() + ".png";
             setDropShadow(imgview6);
             try ( FileInputStream input = new FileInputStream(App.fileImagesEyes + currentPath1)) {
-                setImagesViews(input,  imgViewEyes, 150, 150);
+                setImagesViews(input, imgViewEyes, 150, 150);
             } catch (IOException ex) {
                 System.out.println("Error imagen 1");
             }
@@ -220,7 +220,7 @@ public class PrincipalPaneController {
                 String currentPath = currentPathMouths.get(i).getPath() + ".png";
                 imageViewsMouth.set(i, imageView);
                 try ( FileInputStream input = new FileInputStream(App.fileImagesMouths + currentPath)) {
-                    setImagesViews(input,  imageView, 50, 50);
+                    setImagesViews(input, imageView, 50, 50);
                 } catch (IOException ex) {
                     System.out.println("Error: image not found");
                 }
@@ -228,7 +228,7 @@ public class PrincipalPaneController {
             String currentPath1 = currentPathMouths.get(5).getPath() + ".png";
             setDropShadow(imgview6);
             try ( FileInputStream input = new FileInputStream(App.fileImagesMouths + currentPath1)) {
-                setImagesViews(input,  imgViewMouth, 150, 150);
+                setImagesViews(input, imgViewMouth, 150, 150);
             } catch (IOException ex) {
                 System.out.println("Error imagen 1");
             }
@@ -253,7 +253,7 @@ public class PrincipalPaneController {
                 String currentPath = currentPathFaces.get(i).getPath() + ".png";
                 imageViewsFace.set(i, imageView);
                 try ( FileInputStream input = new FileInputStream(App.fileImagesFaces + currentPath)) {
-                    setImagesViews(input,  imageView, 50, 50);
+                    setImagesViews(input, imageView, 50, 50);
                 } catch (IOException ex) {
                     System.out.println("Error imagen 1");
                 }
@@ -261,7 +261,7 @@ public class PrincipalPaneController {
             String currentPath1 = currentPathFaces.get(0).getPath() + ".png";
             setDropShadow(imgview1);
             try ( FileInputStream input = new FileInputStream(App.fileImagesFaces + currentPath1)) {
-                setImagesViews(input,  imgViewEmoji, 300, 300);
+                setImagesViews(input, imgViewEmoji, 300, 300);
             } catch (IOException ex) {
                 System.out.println("Error imagen 1");
             }
@@ -283,7 +283,7 @@ public class PrincipalPaneController {
                 String currentPath = currentPathEyes.get(i).getPath() + ".png";
                 imageViewsEye.set(i, imageView);
                 try ( FileInputStream input = new FileInputStream(App.fileImagesEyes + currentPath)) {
-                    setImagesViews(input,  imageView, 50, 50);
+                    setImagesViews(input, imageView, 50, 50);
                 } catch (IOException ex) {
                     System.out.println("Error imagen 1");
                 }
@@ -292,8 +292,8 @@ public class PrincipalPaneController {
             setDropShadow(imgview1);
 
             try ( FileInputStream input = new FileInputStream(App.fileImagesEyes + currentPath1)) {
-                setImagesViews(input,  imgViewEyes, 150, 150);
-                
+                setImagesViews(input, imgViewEyes, 150, 150);
+
             } catch (IOException ex) {
                 System.out.println("Error imagen 1");
             }
@@ -312,7 +312,7 @@ public class PrincipalPaneController {
                 String currentPath = currentPathMouths.get(i).getPath() + ".png";
                 imageViewsMouth.set(i, imageView);
                 try ( FileInputStream input = new FileInputStream(App.fileImagesMouths + currentPath)) {
-                    setImagesViews(input,  imageView, 50, 50);
+                    setImagesViews(input, imageView, 50, 50);
                 } catch (IOException ex) {
                     System.out.println("Error imagen 1");
                 }
@@ -322,38 +322,43 @@ public class PrincipalPaneController {
             String currentPath1 = currentPathMouths.get(0).getPath() + ".png";
             setDropShadow(imgview1);
             try ( FileInputStream input = new FileInputStream(App.fileImagesMouths + currentPath1)) {
-                setImagesViews(input,  imgViewMouth, 150, 150);
+                setImagesViews(input, imgViewMouth, 150, 150);
             } catch (IOException ex) {
                 System.out.println("Error imagen 1");
             }
         }
 
     }
+
     @FXML
     private void imgViewClick1(MouseEvent event) {
-        imagesViewsClick(0,imgview1);
+        imagesViewsClick(0, imgview1);
     }
+
     @FXML
     private void imgViewClick2(MouseEvent event) {
-        imagesViewsClick(1,imgview2);
+        imagesViewsClick(1, imgview2);
     }
+
     @FXML
     private void imgViewClick3(MouseEvent event) {
-        imagesViewsClick(2,imgview3);
+        imagesViewsClick(2, imgview3);
     }
+
     @FXML
     private void imgViewClick4(MouseEvent event) {
-        imagesViewsClick(3,imgview4);
+        imagesViewsClick(3, imgview4);
     }
+
     @FXML
     private void imgViewClick5(MouseEvent event) {
-        imagesViewsClick(4,imgview5);
+        imagesViewsClick(4, imgview5);
     }
+
     @FXML
     private void imgViewClick6(MouseEvent event) {
-        imagesViewsClick(5,imgview6);
+        imagesViewsClick(5, imgview6);
     }
-    
 
     @FXML
     private void btnFaceClick(ActionEvent event) {
@@ -364,14 +369,14 @@ public class PrincipalPaneController {
             ImageView imgview = imageViews.get(i);
             String currentPath = faces.get(i).getPath() + ".png";
             try ( FileInputStream input = new FileInputStream(App.fileImagesFaces + currentPath)) {
-                setImagesViews(input,  imgview, 50, 50);
+                setImagesViews(input, imgview, 50, 50);
             } catch (IOException ex) {
                 System.out.println("Error imagen 1");
             }
         }
         String currentPath = faces.get(0).getPath() + ".png";
         try ( FileInputStream input = new FileInputStream(App.fileImagesFaces + currentPath)) {
-            setImagesViews(input,  imgViewEmoji, 300, 300);
+            setImagesViews(input, imgViewEmoji, 300, 300);
         } catch (IOException ex) {
             System.out.println("Error imagen 1");
         }
@@ -386,14 +391,14 @@ public class PrincipalPaneController {
             ImageView imgview = imageViews.get(i);
             String currentPath = eyes.get(i).getPath() + ".png";
             try ( FileInputStream input = new FileInputStream(App.fileImagesEyes + currentPath)) {
-                setImagesViews(input,  imgview, 50, 50);
+                setImagesViews(input, imgview, 50, 50);
             } catch (IOException ex) {
                 System.out.println("Error imagen 1");
             }
         }
         String currentPath = eyes.get(0).getPath() + ".png";
         try ( FileInputStream input = new FileInputStream(App.fileImagesMouths + currentPath)) {
-            setImagesViews(input,  imgViewEyes, 150, 150);
+            setImagesViews(input, imgViewEyes, 150, 150);
         } catch (IOException ex) {
             System.out.println("Error imagen 1");
         }
@@ -408,25 +413,26 @@ public class PrincipalPaneController {
             ImageView imgview = imageViews.get(i);
             String currentPath = mouths.get(i).getPath() + ".png";
             try ( FileInputStream input = new FileInputStream(App.fileImagesMouths + currentPath)) {
-                setImagesViews(input,  imgview, 50, 50);
+                setImagesViews(input, imgview, 50, 50);
             } catch (IOException ex) {
                 System.out.println("Error imagen 1");
             }
         }
         String currentPath = mouths.get(0).getPath() + ".png";
         try ( FileInputStream input = new FileInputStream(App.fileImagesMouths + currentPath)) {
-            setImagesViews(input,  imgViewMouth, 150, 150);
+            setImagesViews(input, imgViewMouth, 150, 150);
         } catch (IOException ex) {
             System.out.println("Error imagen 1");
         }
 
     }
-    private void imagesViewsClick(int actualIndex, ImageView imgView){
+
+    private void imagesViewsClick(int actualIndex, ImageView imgView) {
         if (isChangingFace) {
             String currentPath1 = currentPathFaces.get(actualIndex).getPath() + ".png";
             setDropShadow(imgView);
             try ( FileInputStream input = new FileInputStream(App.fileImagesFaces + currentPath1)) {
-                setImagesViews(input,  imgViewEmoji, 300, 300);
+                setImagesViews(input, imgViewEmoji, 300, 300);
             } catch (IOException ex) {
                 System.out.println("Error imagen 1");
             }
@@ -434,7 +440,7 @@ public class PrincipalPaneController {
             String currentPath1 = currentPathEyes.get(actualIndex).getPath() + ".png";
             setDropShadow(imgView);
             try ( FileInputStream input = new FileInputStream(App.fileImagesEyes + currentPath1)) {
-                setImagesViews(input,  imgViewEyes, 150, 150);
+                setImagesViews(input, imgViewEyes, 150, 150);
             } catch (IOException ex) {
                 System.out.println("Error imagen 1");
             }
@@ -442,13 +448,14 @@ public class PrincipalPaneController {
             String currentPath1 = currentPathMouths.get(actualIndex).getPath() + ".png";
             setDropShadow(imgView);
             try ( FileInputStream input = new FileInputStream(App.fileImagesMouths + currentPath1)) {
-                setImagesViews(input,  imgViewMouth, 150, 150);
+                setImagesViews(input, imgViewMouth, 150, 150);
             } catch (IOException ex) {
                 System.out.println("Error imagen 1");
             }
         }
     }
-    private void setDropShadow(ImageView imgview){
+
+    private void setDropShadow(ImageView imgview) {
         DropShadow borderEffect = new DropShadow();
         borderEffect.setColor(Color.BLACK);
         borderEffect.setRadius(20); // Ajustar el valor para hacer el borde más grueso
@@ -462,12 +469,13 @@ public class PrincipalPaneController {
         timeline.setOnFinished(e -> imgview.setEffect(null)); // Eliminar el efecto después de 2 segundos
         timeline.play();
     }
-    private void setImagesViews(FileInputStream input, ImageView imgView, int height, int width){
+
+    private void setImagesViews(FileInputStream input, ImageView imgView, int height, int width) {
         Image img = new Image(input);
         imgView.setImage(img);
         imgView.setFitHeight(height);
         imgView.setFitWidth(width);
-        
+
     }
 
     @FXML
@@ -477,13 +485,12 @@ public class PrincipalPaneController {
 
     @FXML
     private void btnDeleteMouthClick(ActionEvent event) {
-        imgViewMouth.setImage(null); 
+        imgViewMouth.setImage(null);
     }
 
     @FXML
     private void btnDeleteEyesClick(ActionEvent event) {
         imgViewEyes.setImage(null);
     }
-    
 
 }
