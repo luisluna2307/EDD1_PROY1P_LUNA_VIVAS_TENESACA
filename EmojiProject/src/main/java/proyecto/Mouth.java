@@ -34,7 +34,7 @@ public class Mouth {
             String sCurrentLine;
             while ((sCurrentLine = br.readLine()) != null) {
                 Mouth mouth = new Mouth(sCurrentLine);
-                mouths.add(mouth);
+                mouths.addLast(mouth);
               //  System.out.println(sCurrentLine);
             }
         } catch (IOException e) {

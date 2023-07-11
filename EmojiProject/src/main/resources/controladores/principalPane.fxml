@@ -21,11 +21,13 @@
                </children></HBox>
             <Button fx:id="nextButton" layoutX="1034.0" layoutY="58.0" mnemonicParsing="false" onAction="#next" text="Next" />
             <Button fx:id="previusButton" layoutX="120.0" layoutY="58.0" mnemonicParsing="false" onAction="#previous" text="Previo" />
-            <Button mnemonicParsing="false" text="Button" />
             <Button fx:id="btnFace" layoutX="342.0" layoutY="13.0" mnemonicParsing="false" onAction="#btnFaceClick" text="Face" />
             <Button fx:id="btnEye" layoutX="467.0" layoutY="13.0" mnemonicParsing="false" onAction="#btnEyeClick" text="Eye" />
             <Button fx:id="btnMouth" layoutX="581.0" layoutY="13.0" mnemonicParsing="false" onAction="#btnMouthClick" text="Mouth" />
-         </children>
+            <Button fx:id="btnDeleteFace" layoutX="388.0" layoutY="13.0" mnemonicParsing="false" onAction="#btnDeleteFaceClick" text="x" />
+            <Button fx:id="btnDeleteMouth" layoutX="644.0" layoutY="13.0" mnemonicParsing="false" onAction="#btnDeleteMouthClick" text="x" />
+            <Button fx:id="btnDeleteEyes" layoutX="510.0" layoutY="13.0" mnemonicParsing="false" onAction="#btnDeleteEyesClick" text="x" />
+             </children>
       </AnchorPane>
    </bottom>
    <top>
@@ -37,8 +39,8 @@
             <AnchorPane layoutX="495.0" layoutY="117.0" prefHeight="283.0" prefWidth="306.0">
                <children>
                   <ImageView fx:id="imgViewEmoji" fitHeight="326.0" fitWidth="335.0" layoutX="-5.0" layoutY="2.0" pickOnBounds="true" preserveRatio="true" />
-                  <ImageView fx:id="imgViewMouth" fitHeight="105.0" fitWidth="200.0" layoutX="71.0" layoutY="164.0" pickOnBounds="true" preserveRatio="true" />
-                  <ImageView fx:id="imgViewEyes" fitHeight="95.0" fitWidth="200.0" layoutX="65.0" layoutY="69.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="imgViewMouth" fitHeight="105.0" fitWidth="200.0" layoutX="70.0" layoutY="164.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="imgViewEyes" fitHeight="95.0" fitWidth="200.0" layoutX="65.0" layoutY="43.0" pickOnBounds="true" preserveRatio="true" />
                </children>
             </AnchorPane>
          </children></AnchorPane>

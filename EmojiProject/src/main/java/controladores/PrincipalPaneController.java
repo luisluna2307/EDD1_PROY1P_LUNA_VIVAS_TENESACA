@@ -78,6 +78,14 @@ public class PrincipalPaneController {
     private Button btnEye;
     @FXML
     private Button btnMouth;
+    @FXML
+    private Button btnDeleteFace;
+    @FXML
+    private Button btnDeleteMouth;
+    @FXML
+    private Button btnDeleteEyes;
+    @FXML
+    private ImageView imgViewEyes1;
 
     public void initialize() {
         currentIndex = 0;
@@ -119,17 +127,12 @@ public class PrincipalPaneController {
     private void initialComponents() {
         faces = Face.loadFaces(App.pathFaces);
         isChangingFace = true;
-        //DoublyNodeList<>
         for (int i = 0; i <= 5; i++) {
-
             String currentPath = faces.get(i).getPath() + ".png";
+            ImageView imgview = imageViews.get(i);
             try ( FileInputStream input = new FileInputStream(App.fileImagesFaces + currentPath)) {
-                Image img = new Image(input);
-                ImageView imgview = imageViews.get(i);
                 imageViewsFace.addLast(imgview);
-                imgview.setImage(img);
-                imgview.setFitHeight(50);
-                imgview.setFitWidth(50);
+                setImagesViews(input, imgview,50,50);
             } catch (IOException ex) {
                 System.out.println("Error imagen 1");
             }
@@ -138,10 +141,7 @@ public class PrincipalPaneController {
         hBoxImagesContainers.setAlignment(Pos.CENTER);
         String currentPath = faces.get(0).getPath() + ".png";
         try ( FileInputStream input = new FileInputStream(App.fileImagesFaces + currentPath)) {
-            Image img = new Image(input);
-            imgViewEmoji.setImage(img);
-            imgViewEmoji.setFitHeight(300);
-            imgViewEmoji.setFitWidth(300);
+            setImagesViews(input,  imgViewEmoji, 300, 300);
         } catch (IOException ex) {
             System.out.println("Error imagen 1");
         }
@@ -165,34 +165,15 @@ public class PrincipalPaneController {
                 String currentPath = currentPathFaces.get(i).getPath() + ".png";
                 imageViewsFace.set(i, imageView);
                 try ( FileInputStream input = new FileInputStream(App.fileImagesFaces + currentPath)) {
-                    Image img = new Image(input);
-                    // ImageView imgview = imageViews.get(i);
-                    imageView.setImage(img);
-                    imageView.setFitHeight(50);
-                    imageView.setFitWidth(50);
+                    setImagesViews(input,  imageView, 50, 50);
                 } catch (IOException ex) {
                     System.out.println("Error imagen 1");
                 }
             }
             String currentPath1 = currentPathFaces.get(5).getPath() + ".png";
-            DropShadow borderEffect = new DropShadow();
-            borderEffect.setColor(Color.BLACK);
-            borderEffect.setRadius(20); // Ajustar el valor para hacer el borde más grueso
-            borderEffect.setSpread(0.6); // Ajustar el valor para controlar la propagación del efecto
+            setDropShadow(imgview6);
             try ( FileInputStream input = new FileInputStream(App.fileImagesFaces + currentPath1)) {
-                Image img = new Image(input);
-                imgViewEmoji.setImage(img);
-                imgViewEmoji.setFitHeight(300);
-                imgViewEmoji.setFitWidth(300);
-                imgview6.setEffect(borderEffect);
-
-                KeyValue keyValue = new KeyValue(borderEffect.radiusProperty(), 10);
-                // Crear un KeyFrame para especificar la duración y el valor final del KeyValue
-                KeyFrame keyFrame = new KeyFrame(Duration.seconds(1.2), keyValue);
-                // Crear un Timeline con el KeyFrame y configurar el evento de finalización
-                Timeline timeline = new Timeline(keyFrame);
-                timeline.setOnFinished(e -> imgview6.setEffect(null)); // Eliminar el efecto después de 2 segundos
-                timeline.play();
+                setImagesViews(input,  imgViewEmoji, 300, 300);
             } catch (IOException ex) {
                 System.out.println("Error imagen 1");
             }
@@ -209,37 +190,18 @@ public class PrincipalPaneController {
                 }
                 currentPathEyes.set(i, eyes.getNode(eyes.getIndex(foundEye)).getNext().getContent());
                 ImageView imageView = imageViews.get(i);
-                String currentPath = currentPathFaces.get(i).getPath() + ".png";
-                imageViewsFace.set(i, imageView);
-                try ( FileInputStream input = new FileInputStream(App.fileImagesFaces + currentPath)) {
-                    Image img = new Image(input);
-                    // ImageView imgview = imageViews.get(i);
-                    imageView.setImage(img);
-                    imageView.setFitHeight(50);
-                    imageView.setFitWidth(50);
+                String currentPath = currentPathEyes.get(i).getPath() + ".png";
+                imageViewsEye.set(i, imageView);
+                try ( FileInputStream input = new FileInputStream(App.fileImagesEyes + currentPath)) {
+                    setImagesViews(input,  imageView, 50, 50);
                 } catch (IOException ex) {
                     System.out.println("Error: image not found");
                 }
             }
             String currentPath1 = currentPathEyes.get(5).getPath() + ".png";
-            DropShadow borderEffect = new DropShadow();
-            borderEffect.setColor(Color.BLACK);
-            borderEffect.setRadius(20); // Ajustar el valor para hacer el borde más grueso
-            borderEffect.setSpread(0.6); // Ajustar el valor para controlar la propagación del efecto
+            setDropShadow(imgview6);
             try ( FileInputStream input = new FileInputStream(App.fileImagesEyes + currentPath1)) {
-                Image img = new Image(input);
-                imgViewEmoji.setImage(img);
-                imgViewEmoji.setFitHeight(300);
-                imgViewEmoji.setFitWidth(300);
-                imgview6.setEffect(borderEffect);
-
-                KeyValue keyValue = new KeyValue(borderEffect.radiusProperty(), 10);
-                // Crear un KeyFrame para especificar la duración y el valor final del KeyValue
-                KeyFrame keyFrame = new KeyFrame(Duration.seconds(1.2), keyValue);
-                // Crear un Timeline con el KeyFrame y configurar el evento de finalización
-                Timeline timeline = new Timeline(keyFrame);
-                timeline.setOnFinished(e -> imgview6.setEffect(null)); // Eliminar el efecto después de 2 segundos
-                timeline.play();
+                setImagesViews(input,  imgViewEyes, 150, 150);
             } catch (IOException ex) {
                 System.out.println("Error imagen 1");
             }
@@ -258,34 +220,15 @@ public class PrincipalPaneController {
                 String currentPath = currentPathMouths.get(i).getPath() + ".png";
                 imageViewsMouth.set(i, imageView);
                 try ( FileInputStream input = new FileInputStream(App.fileImagesMouths + currentPath)) {
-                    Image img = new Image(input);
-                    // ImageView imgview = imageViews.get(i);
-                    imageView.setImage(img);
-                    imageView.setFitHeight(50);
-                    imageView.setFitWidth(50);
+                    setImagesViews(input,  imageView, 50, 50);
                 } catch (IOException ex) {
                     System.out.println("Error: image not found");
                 }
             }
             String currentPath1 = currentPathMouths.get(5).getPath() + ".png";
-            DropShadow borderEffect = new DropShadow();
-            borderEffect.setColor(Color.BLACK);
-            borderEffect.setRadius(20); // Ajustar el valor para hacer el borde más grueso
-            borderEffect.setSpread(0.6); // Ajustar el valor para controlar la propagación del efecto
+            setDropShadow(imgview6);
             try ( FileInputStream input = new FileInputStream(App.fileImagesMouths + currentPath1)) {
-                Image img = new Image(input);
-                imgViewEmoji.setImage(img);
-                imgViewEmoji.setFitHeight(300);
-                imgViewEmoji.setFitWidth(300);
-                imgview6.setEffect(borderEffect);
-
-                KeyValue keyValue = new KeyValue(borderEffect.radiusProperty(), 10);
-                // Crear un KeyFrame para especificar la duración y el valor final del KeyValue
-                KeyFrame keyFrame = new KeyFrame(Duration.seconds(1.2), keyValue);
-                // Crear un Timeline con el KeyFrame y configurar el evento de finalización
-                Timeline timeline = new Timeline(keyFrame);
-                timeline.setOnFinished(e -> imgview6.setEffect(null)); // Eliminar el efecto después de 2 segundos
-                timeline.play();
+                setImagesViews(input,  imgViewMouth, 150, 150);
             } catch (IOException ex) {
                 System.out.println("Error imagen 1");
             }
@@ -298,7 +241,6 @@ public class PrincipalPaneController {
         if (isChangingFace) {
             for (int i = 0; i < imageViews.size(); i++) {
                 Face actualFace = currentPathFaces.get(i);
-                System.out.println(actualFace.getPath());
                 Face foundFace = actualFace;
                 for (int j = 0; j < faces.size(); j++) {
                     if (faces.get(j).getPath().equals(actualFace.getPath())) {
@@ -307,42 +249,19 @@ public class PrincipalPaneController {
                     }
                 }
                 currentPathFaces.set(i, faces.getNode(faces.getIndex(foundFace)).getPrevious().getContent());
-                System.out.println(faces.getIndex(actualFace));
-                System.out.println(currentPathFaces.get(i).getPath());
                 ImageView imageView = imageViews.get(i);
                 String currentPath = currentPathFaces.get(i).getPath() + ".png";
                 imageViewsFace.set(i, imageView);
                 try ( FileInputStream input = new FileInputStream(App.fileImagesFaces + currentPath)) {
-                    Image img = new Image(input);
-                    // ImageView imgview = imageViews.get(i);
-                    imageView.setImage(img);
-                    imageView.setFitHeight(50);
-                    imageView.setFitWidth(50);
+                    setImagesViews(input,  imageView, 50, 50);
                 } catch (IOException ex) {
                     System.out.println("Error imagen 1");
                 }
-                // System.out.println(currentPaths.get(i).toString());
-                System.out.println(currentPathFaces.toString());
             }
             String currentPath1 = currentPathFaces.get(0).getPath() + ".png";
-            DropShadow borderEffect = new DropShadow();
-            borderEffect.setColor(Color.BLACK);
-            borderEffect.setRadius(20); // Ajustar el valor para hacer el borde más grueso
-            borderEffect.setSpread(0.6); // Ajustar el valor para controlar la propagación del efecto
+            setDropShadow(imgview1);
             try ( FileInputStream input = new FileInputStream(App.fileImagesFaces + currentPath1)) {
-                Image img = new Image(input);
-                imgViewEmoji.setImage(img);
-                imgViewEmoji.setFitHeight(300);
-                imgViewEmoji.setFitWidth(300);
-                imgview1.setEffect(borderEffect);
-
-                KeyValue keyValue = new KeyValue(borderEffect.radiusProperty(), 10);
-                // Crear un KeyFrame para especificar la duración y el valor final del KeyValue
-                KeyFrame keyFrame = new KeyFrame(Duration.seconds(1.2), keyValue);
-                // Crear un Timeline con el KeyFrame y configurar el evento de finalización
-                Timeline timeline = new Timeline(keyFrame);
-                timeline.setOnFinished(e -> imgview1.setEffect(null)); // Eliminar el efecto después de 2 segundos
-                timeline.play();
+                setImagesViews(input,  imgViewEmoji, 300, 300);
             } catch (IOException ex) {
                 System.out.println("Error imagen 1");
             }
@@ -364,36 +283,17 @@ public class PrincipalPaneController {
                 String currentPath = currentPathEyes.get(i).getPath() + ".png";
                 imageViewsEye.set(i, imageView);
                 try ( FileInputStream input = new FileInputStream(App.fileImagesEyes + currentPath)) {
-                    Image img = new Image(input);
-                    // ImageView imgview = imageViews.get(i);
-                    imageView.setImage(img);
-                    imageView.setFitHeight(50);
-                    imageView.setFitWidth(50);
+                    setImagesViews(input,  imageView, 50, 50);
                 } catch (IOException ex) {
                     System.out.println("Error imagen 1");
                 }
-                // System.out.println(currentPaths.get(i).toString());
-                System.out.println(currentPathEyes.toString());
             }
             String currentPath1 = currentPathEyes.get(0).getPath() + ".png";
-            DropShadow borderEffect = new DropShadow();
-            borderEffect.setColor(Color.BLACK);
-            borderEffect.setRadius(20); // Ajustar el valor para hacer el borde más grueso
-            borderEffect.setSpread(0.6); // Ajustar el valor para controlar la propagación del efecto
-            try ( FileInputStream input = new FileInputStream(App.fileImagesEyes + currentPath1)) {
-                Image img = new Image(input);
-                imgViewEmoji.setImage(img);
-                imgViewEmoji.setFitHeight(300);
-                imgViewEmoji.setFitWidth(300);
-                imgview1.setEffect(borderEffect);
+            setDropShadow(imgview1);
 
-                KeyValue keyValue = new KeyValue(borderEffect.radiusProperty(), 10);
-                // Crear un KeyFrame para especificar la duración y el valor final del KeyValue
-                KeyFrame keyFrame = new KeyFrame(Duration.seconds(1.2), keyValue);
-                // Crear un Timeline con el KeyFrame y configurar el evento de finalización
-                Timeline timeline = new Timeline(keyFrame);
-                timeline.setOnFinished(e -> imgview1.setEffect(null)); // Eliminar el efecto después de 2 segundos
-                timeline.play();
+            try ( FileInputStream input = new FileInputStream(App.fileImagesEyes + currentPath1)) {
+                setImagesViews(input,  imgViewEyes, 150, 150);
+                
             } catch (IOException ex) {
                 System.out.println("Error imagen 1");
             }
@@ -412,11 +312,7 @@ public class PrincipalPaneController {
                 String currentPath = currentPathMouths.get(i).getPath() + ".png";
                 imageViewsMouth.set(i, imageView);
                 try ( FileInputStream input = new FileInputStream(App.fileImagesMouths + currentPath)) {
-                    Image img = new Image(input);
-                    // ImageView imgview = imageViews.get(i);
-                    imageView.setImage(img);
-                    imageView.setFitHeight(50);
-                    imageView.setFitWidth(50);
+                    setImagesViews(input,  imageView, 50, 50);
                 } catch (IOException ex) {
                     System.out.println("Error imagen 1");
                 }
@@ -424,476 +320,40 @@ public class PrincipalPaneController {
                 System.out.println(currentPathMouths.toString());
             }
             String currentPath1 = currentPathMouths.get(0).getPath() + ".png";
-            DropShadow borderEffect = new DropShadow();
-            borderEffect.setColor(Color.BLACK);
-            borderEffect.setRadius(20); // Ajustar el valor para hacer el borde más grueso
-            borderEffect.setSpread(0.6); // Ajustar el valor para controlar la propagación del efecto
+            setDropShadow(imgview1);
             try ( FileInputStream input = new FileInputStream(App.fileImagesMouths + currentPath1)) {
-                Image img = new Image(input);
-                imgViewEmoji.setImage(img);
-                imgViewEmoji.setFitHeight(150);
-                imgViewEmoji.setFitWidth(150);
-                imgview1.setEffect(borderEffect);
-
-                KeyValue keyValue = new KeyValue(borderEffect.radiusProperty(), 10);
-                // Crear un KeyFrame para especificar la duración y el valor final del KeyValue
-                KeyFrame keyFrame = new KeyFrame(Duration.seconds(1.2), keyValue);
-                // Crear un Timeline con el KeyFrame y configurar el evento de finalización
-                Timeline timeline = new Timeline(keyFrame);
-                timeline.setOnFinished(e -> imgview1.setEffect(null)); // Eliminar el efecto después de 2 segundos
-                timeline.play();
+                setImagesViews(input,  imgViewMouth, 150, 150);
             } catch (IOException ex) {
                 System.out.println("Error imagen 1");
             }
         }
 
     }
-
     @FXML
     private void imgViewClick1(MouseEvent event) {
-        if (isChangingFace) {
-            String currentPath1 = currentPathFaces.get(0).getPath() + ".png";
-            DropShadow borderEffect = new DropShadow();
-            borderEffect.setColor(Color.BLACK);
-            borderEffect.setRadius(20); // Ajustar el valor para hacer el borde más grueso
-            borderEffect.setSpread(0.6); // Ajustar el valor para controlar la propagación del efecto
-            try ( FileInputStream input = new FileInputStream(App.fileImagesFaces + currentPath1)) {
-                Image img = new Image(input);
-                imgViewEmoji.setImage(img);
-                imgViewEmoji.setFitHeight(300);
-                imgViewEmoji.setFitWidth(300);
-                imgview1.setEffect(borderEffect);
-
-                KeyValue keyValue = new KeyValue(borderEffect.radiusProperty(), 10);
-                // Crear un KeyFrame para especificar la duración y el valor final del KeyValue
-                KeyFrame keyFrame = new KeyFrame(Duration.seconds(1.2), keyValue);
-                // Crear un Timeline con el KeyFrame y configurar el evento de finalización
-                Timeline timeline = new Timeline(keyFrame);
-                timeline.setOnFinished(e -> imgview1.setEffect(null)); // Eliminar el efecto después de 2 segundos
-                timeline.play();
-            } catch (IOException ex) {
-                System.out.println("Error imagen 1");
-            }
-        } else if (isChangingEye) {
-            String currentPath1 = currentPathEyes.get(0).getPath() + ".png";
-            DropShadow borderEffect = new DropShadow();
-            borderEffect.setColor(Color.BLACK);
-            borderEffect.setRadius(20); // Ajustar el valor para hacer el borde más grueso
-            borderEffect.setSpread(0.6); // Ajustar el valor para controlar la propagación del efecto
-            try ( FileInputStream input = new FileInputStream(App.fileImagesEyes + currentPath1)) {
-                Image img = new Image(input);
-                imgViewEyes.setImage(img);
-                imgViewEyes.setFitHeight(300);
-                imgViewEyes.setFitWidth(300);
-                imgview1.setEffect(borderEffect);
-
-                KeyValue keyValue = new KeyValue(borderEffect.radiusProperty(), 10);
-                // Crear un KeyFrame para especificar la duración y el valor final del KeyValue
-                KeyFrame keyFrame = new KeyFrame(Duration.seconds(1.2), keyValue);
-                // Crear un Timeline con el KeyFrame y configurar el evento de finalización
-                Timeline timeline = new Timeline(keyFrame);
-                timeline.setOnFinished(e -> imgview1.setEffect(null)); // Eliminar el efecto después de 2 segundos
-                timeline.play();
-            } catch (IOException ex) {
-                System.out.println("Error imagen 1");
-            }
-        } else if (isChangingMouth) {
-            String currentPath1 = currentPathMouths.get(0).getPath() + ".png";
-            DropShadow borderEffect = new DropShadow();
-            borderEffect.setColor(Color.BLACK);
-            borderEffect.setRadius(20); // Ajustar el valor para hacer el borde más grueso
-            borderEffect.setSpread(0.6); // Ajustar el valor para controlar la propagación del efecto
-            try ( FileInputStream input = new FileInputStream(App.fileImagesMouths + currentPath1)) {
-                Image img = new Image(input);
-                imgViewMouth.setImage(img);
-                imgViewMouth.setFitHeight(150);
-                imgViewMouth.setFitWidth(150);
-                imgview1.setEffect(borderEffect);
-
-                KeyValue keyValue = new KeyValue(borderEffect.radiusProperty(), 10);
-                // Crear un KeyFrame para especificar la duración y el valor final del KeyValue
-                KeyFrame keyFrame = new KeyFrame(Duration.seconds(1.2), keyValue);
-                // Crear un Timeline con el KeyFrame y configurar el evento de finalización
-                Timeline timeline = new Timeline(keyFrame);
-                timeline.setOnFinished(e -> imgview1.setEffect(null)); // Eliminar el efecto después de 2 segundos
-                timeline.play();
-            } catch (IOException ex) {
-                System.out.println("Error imagen 1");
-            }
-        }
-
+        imagesViewsClick(0,imgview1);
     }
-
     @FXML
     private void imgViewClick2(MouseEvent event) {
-        if (isChangingFace) {
-            String currentPath1 = currentPathFaces.get(1).getPath() + ".png";
-            DropShadow borderEffect = new DropShadow();
-            borderEffect.setColor(Color.BLACK);
-            borderEffect.setRadius(20); // Ajustar el valor para hacer el borde más grueso
-            borderEffect.setSpread(0.6); // Ajustar el valor para controlar la propagación del efecto
-            try ( FileInputStream input = new FileInputStream(App.fileImagesFaces + currentPath1)) {
-                Image img = new Image(input);
-                imgViewEmoji.setImage(img);
-                imgViewEmoji.setFitHeight(300);
-                imgViewEmoji.setFitWidth(300);
-                imgview2.setEffect(borderEffect);
-
-                KeyValue keyValue = new KeyValue(borderEffect.radiusProperty(), 10);
-                // Crear un KeyFrame para especificar la duración y el valor final del KeyValue
-                KeyFrame keyFrame = new KeyFrame(Duration.seconds(1.2), keyValue);
-                // Crear un Timeline con el KeyFrame y configurar el evento de finalización
-                Timeline timeline = new Timeline(keyFrame);
-                timeline.setOnFinished(e -> imgview2.setEffect(null)); // Eliminar el efecto después de 2 segundos
-                timeline.play();
-            } catch (IOException ex) {
-                System.out.println("Error imagen 1");
-            }
-        } else if (isChangingEye) {
-            String currentPath1 = currentPathEyes.get(1).getPath() + ".png";
-            DropShadow borderEffect = new DropShadow();
-            borderEffect.setColor(Color.BLACK);
-            borderEffect.setRadius(20); // Ajustar el valor para hacer el borde más grueso
-            borderEffect.setSpread(0.6); // Ajustar el valor para controlar la propagación del efecto
-            try ( FileInputStream input = new FileInputStream(App.fileImagesEyes + currentPath1)) {
-                Image img = new Image(input);
-                imgViewEyes.setImage(img);
-                imgViewEyes.setFitHeight(300);
-                imgViewEyes.setFitWidth(300);
-                imgview2.setEffect(borderEffect);
-
-                KeyValue keyValue = new KeyValue(borderEffect.radiusProperty(), 10);
-                // Crear un KeyFrame para especificar la duración y el valor final del KeyValue
-                KeyFrame keyFrame = new KeyFrame(Duration.seconds(1.2), keyValue);
-                // Crear un Timeline con el KeyFrame y configurar el evento de finalización
-                Timeline timeline = new Timeline(keyFrame);
-                timeline.setOnFinished(e -> imgview2.setEffect(null)); // Eliminar el efecto después de 2 segundos
-                timeline.play();
-            } catch (IOException ex) {
-                System.out.println("Error imagen 1");
-            }
-        } else if (isChangingMouth) {
-            String currentPath1 = currentPathMouths.get(1).getPath() + ".png";
-            DropShadow borderEffect = new DropShadow();
-            borderEffect.setColor(Color.BLACK);
-            borderEffect.setRadius(20); // Ajustar el valor para hacer el borde más grueso
-            borderEffect.setSpread(0.6); // Ajustar el valor para controlar la propagación del efecto
-            try ( FileInputStream input = new FileInputStream(App.fileImagesMouths + currentPath1)) {
-                Image img = new Image(input);
-                imgViewMouth.setImage(img);
-                imgViewMouth.setFitHeight(150);
-                imgViewMouth.setFitWidth(150);
-                imgview2.setEffect(borderEffect);
-
-                KeyValue keyValue = new KeyValue(borderEffect.radiusProperty(), 10);
-                // Crear un KeyFrame para especificar la duración y el valor final del KeyValue
-                KeyFrame keyFrame = new KeyFrame(Duration.seconds(1.2), keyValue);
-                // Crear un Timeline con el KeyFrame y configurar el evento de finalización
-                Timeline timeline = new Timeline(keyFrame);
-                timeline.setOnFinished(e -> imgview2.setEffect(null)); // Eliminar el efecto después de 2 segundos
-                timeline.play();
-            } catch (IOException ex) {
-                System.out.println("Error imagen 1");
-            }
-        }
+        imagesViewsClick(1,imgview2);
     }
-
     @FXML
     private void imgViewClick3(MouseEvent event) {
-        if (isChangingFace) {
-            String currentPath1 = currentPathFaces.get(2).getPath() + ".png";
-            DropShadow borderEffect = new DropShadow();
-            borderEffect.setColor(Color.BLACK);
-            borderEffect.setRadius(20); // Ajustar el valor para hacer el borde más grueso
-            borderEffect.setSpread(0.6); // Ajustar el valor para controlar la propagación del efecto
-            try ( FileInputStream input = new FileInputStream(App.fileImagesFaces + currentPath1)) {
-                Image img = new Image(input);
-                imgViewEmoji.setImage(img);
-                imgViewEmoji.setFitHeight(300);
-                imgViewEmoji.setFitWidth(300);
-                imgview3.setEffect(borderEffect);
-
-                KeyValue keyValue = new KeyValue(borderEffect.radiusProperty(), 10);
-                // Crear un KeyFrame para especificar la duración y el valor final del KeyValue
-                KeyFrame keyFrame = new KeyFrame(Duration.seconds(1.2), keyValue);
-                // Crear un Timeline con el KeyFrame y configurar el evento de finalización
-                Timeline timeline = new Timeline(keyFrame);
-                timeline.setOnFinished(e -> imgview3.setEffect(null)); // Eliminar el efecto después de 2 segundos
-                timeline.play();
-            } catch (IOException ex) {
-                System.out.println("Error imagen 1");
-            }
-        } else if (isChangingEye) {
-            String currentPath1 = currentPathEyes.get(2).getPath() + ".png";
-            DropShadow borderEffect = new DropShadow();
-            borderEffect.setColor(Color.BLACK);
-            borderEffect.setRadius(20); // Ajustar el valor para hacer el borde más grueso
-            borderEffect.setSpread(0.6); // Ajustar el valor para controlar la propagación del efecto
-            try ( FileInputStream input = new FileInputStream(App.fileImagesEyes + currentPath1)) {
-                Image img = new Image(input);
-                imgViewEyes.setImage(img);
-                imgViewEyes.setFitHeight(300);
-                imgViewEyes.setFitWidth(300);
-                imgview3.setEffect(borderEffect);
-
-                KeyValue keyValue = new KeyValue(borderEffect.radiusProperty(), 10);
-                // Crear un KeyFrame para especificar la duración y el valor final del KeyValue
-                KeyFrame keyFrame = new KeyFrame(Duration.seconds(1.2), keyValue);
-                // Crear un Timeline con el KeyFrame y configurar el evento de finalización
-                Timeline timeline = new Timeline(keyFrame);
-                timeline.setOnFinished(e -> imgview3.setEffect(null)); // Eliminar el efecto después de 2 segundos
-                timeline.play();
-            } catch (IOException ex) {
-                System.out.println("Error imagen 1");
-            }
-        } else if (isChangingMouth) {
-            String currentPath1 = currentPathMouths.get(2).getPath() + ".png";
-            DropShadow borderEffect = new DropShadow();
-            borderEffect.setColor(Color.BLACK);
-            borderEffect.setRadius(20); // Ajustar el valor para hacer el borde más grueso
-            borderEffect.setSpread(0.6); // Ajustar el valor para controlar la propagación del efecto
-            try ( FileInputStream input = new FileInputStream(App.fileImagesMouths + currentPath1)) {
-                Image img = new Image(input);
-                imgViewMouth.setImage(img);
-                imgViewMouth.setFitHeight(150);
-                imgViewMouth.setFitWidth(150);
-                imgview3.setEffect(borderEffect);
-
-                KeyValue keyValue = new KeyValue(borderEffect.radiusProperty(), 10);
-                // Crear un KeyFrame para especificar la duración y el valor final del KeyValue
-                KeyFrame keyFrame = new KeyFrame(Duration.seconds(1.2), keyValue);
-                // Crear un Timeline con el KeyFrame y configurar el evento de finalización
-                Timeline timeline = new Timeline(keyFrame);
-                timeline.setOnFinished(e -> imgview3.setEffect(null)); // Eliminar el efecto después de 2 segundos
-                timeline.play();
-            } catch (IOException ex) {
-                System.out.println("Error imagen 1");
-            }
-        }
+        imagesViewsClick(2,imgview3);
     }
-
     @FXML
     private void imgViewClick4(MouseEvent event) {
-        if (isChangingFace) {
-            String currentPath1 = currentPathFaces.get(3).getPath() + ".png";
-            DropShadow borderEffect = new DropShadow();
-            borderEffect.setColor(Color.BLACK);
-            borderEffect.setRadius(20); // Ajustar el valor para hacer el borde más grueso
-            borderEffect.setSpread(0.6); // Ajustar el valor para controlar la propagación del efecto
-            try ( FileInputStream input = new FileInputStream(App.fileImagesFaces + currentPath1)) {
-                Image img = new Image(input);
-                imgViewEmoji.setImage(img);
-                imgViewEmoji.setFitHeight(300);
-                imgViewEmoji.setFitWidth(300);
-                imgview4.setEffect(borderEffect);
-
-                KeyValue keyValue = new KeyValue(borderEffect.radiusProperty(), 10);
-                // Crear un KeyFrame para especificar la duración y el valor final del KeyValue
-                KeyFrame keyFrame = new KeyFrame(Duration.seconds(1.2), keyValue);
-                // Crear un Timeline con el KeyFrame y configurar el evento de finalización
-                Timeline timeline = new Timeline(keyFrame);
-                timeline.setOnFinished(e -> imgview4.setEffect(null)); // Eliminar el efecto después de 2 segundos
-                timeline.play();
-            } catch (IOException ex) {
-                System.out.println("Error imagen 1");
-            }
-        } else if (isChangingEye) {
-            String currentPath1 = currentPathEyes.get(3).getPath() + ".png";
-            DropShadow borderEffect = new DropShadow();
-            borderEffect.setColor(Color.BLACK);
-            borderEffect.setRadius(20); // Ajustar el valor para hacer el borde más grueso
-            borderEffect.setSpread(0.6); // Ajustar el valor para controlar la propagación del efecto
-            try ( FileInputStream input = new FileInputStream(App.fileImagesEyes + currentPath1)) {
-                Image img = new Image(input);
-                imgViewEyes.setImage(img);
-                imgViewEyes.setFitHeight(300);
-                imgViewEyes.setFitWidth(300);
-                imgview4.setEffect(borderEffect);
-
-                KeyValue keyValue = new KeyValue(borderEffect.radiusProperty(), 10);
-                // Crear un KeyFrame para especificar la duración y el valor final del KeyValue
-                KeyFrame keyFrame = new KeyFrame(Duration.seconds(1.2), keyValue);
-                // Crear un Timeline con el KeyFrame y configurar el evento de finalización
-                Timeline timeline = new Timeline(keyFrame);
-                timeline.setOnFinished(e -> imgview4.setEffect(null)); // Eliminar el efecto después de 2 segundos
-                timeline.play();
-            } catch (IOException ex) {
-                System.out.println("Error imagen 1");
-            }
-        } else if (isChangingMouth) {
-            String currentPath1 = currentPathMouths.get(3).getPath() + ".png";
-            DropShadow borderEffect = new DropShadow();
-            borderEffect.setColor(Color.BLACK);
-            borderEffect.setRadius(20); // Ajustar el valor para hacer el borde más grueso
-            borderEffect.setSpread(0.6); // Ajustar el valor para controlar la propagación del efecto
-            try ( FileInputStream input = new FileInputStream(App.fileImagesMouths + currentPath1)) {
-                Image img = new Image(input);
-                imgViewMouth.setImage(img);
-                imgViewMouth.setFitHeight(150);
-                imgViewMouth.setFitWidth(150);
-                imgview4.setEffect(borderEffect);
-
-                KeyValue keyValue = new KeyValue(borderEffect.radiusProperty(), 10);
-                // Crear un KeyFrame para especificar la duración y el valor final del KeyValue
-                KeyFrame keyFrame = new KeyFrame(Duration.seconds(1.2), keyValue);
-                // Crear un Timeline con el KeyFrame y configurar el evento de finalización
-                Timeline timeline = new Timeline(keyFrame);
-                timeline.setOnFinished(e -> imgview4.setEffect(null)); // Eliminar el efecto después de 2 segundos
-                timeline.play();
-            } catch (IOException ex) {
-                System.out.println("Error imagen 1");
-            }
-        }
+        imagesViewsClick(3,imgview4);
     }
-
     @FXML
     private void imgViewClick5(MouseEvent event) {
-        if (isChangingFace) {
-            String currentPath1 = currentPathFaces.get(4).getPath() + ".png";
-            DropShadow borderEffect = new DropShadow();
-            borderEffect.setColor(Color.BLACK);
-            borderEffect.setRadius(20); // Ajustar el valor para hacer el borde más grueso
-            borderEffect.setSpread(0.6); // Ajustar el valor para controlar la propagación del efecto
-            try ( FileInputStream input = new FileInputStream(App.fileImagesFaces + currentPath1)) {
-                Image img = new Image(input);
-                imgViewEmoji.setImage(img);
-                imgViewEmoji.setFitHeight(300);
-                imgViewEmoji.setFitWidth(300);
-                imgview5.setEffect(borderEffect);
-
-                KeyValue keyValue = new KeyValue(borderEffect.radiusProperty(), 10);
-                // Crear un KeyFrame para especificar la duración y el valor final del KeyValue
-                KeyFrame keyFrame = new KeyFrame(Duration.seconds(1.2), keyValue);
-                // Crear un Timeline con el KeyFrame y configurar el evento de finalización
-                Timeline timeline = new Timeline(keyFrame);
-                timeline.setOnFinished(e -> imgview5.setEffect(null)); // Eliminar el efecto después de 2 segundos
-                timeline.play();
-            } catch (IOException ex) {
-                System.out.println("Error imagen 1");
-            }
-        } else if (isChangingEye) {
-            String currentPath1 = currentPathEyes.get(4).getPath() + ".png";
-            DropShadow borderEffect = new DropShadow();
-            borderEffect.setColor(Color.BLACK);
-            borderEffect.setRadius(20); // Ajustar el valor para hacer el borde más grueso
-            borderEffect.setSpread(0.6); // Ajustar el valor para controlar la propagación del efecto
-            try ( FileInputStream input = new FileInputStream(App.fileImagesEyes + currentPath1)) {
-                Image img = new Image(input);
-                imgViewEyes.setImage(img);
-                imgViewEyes.setFitHeight(300);
-                imgViewEyes.setFitWidth(300);
-                imgview5.setEffect(borderEffect);
-
-                KeyValue keyValue = new KeyValue(borderEffect.radiusProperty(), 10);
-                // Crear un KeyFrame para especificar la duración y el valor final del KeyValue
-                KeyFrame keyFrame = new KeyFrame(Duration.seconds(1.2), keyValue);
-                // Crear un Timeline con el KeyFrame y configurar el evento de finalización
-                Timeline timeline = new Timeline(keyFrame);
-                timeline.setOnFinished(e -> imgview5.setEffect(null)); // Eliminar el efecto después de 2 segundos
-                timeline.play();
-            } catch (IOException ex) {
-                System.out.println("Error imagen 1");
-            }
-        } else if (isChangingMouth) {
-            String currentPath1 = currentPathMouths.get(4).getPath() + ".png";
-            DropShadow borderEffect = new DropShadow();
-            borderEffect.setColor(Color.BLACK);
-            borderEffect.setRadius(20); // Ajustar el valor para hacer el borde más grueso
-            borderEffect.setSpread(0.6); // Ajustar el valor para controlar la propagación del efecto
-            try ( FileInputStream input = new FileInputStream(App.fileImagesMouths + currentPath1)) {
-                Image img = new Image(input);
-                imgViewMouth.setImage(img);
-                imgViewMouth.setFitHeight(150);
-                imgViewMouth.setFitWidth(150);
-                imgview5.setEffect(borderEffect);
-
-                KeyValue keyValue = new KeyValue(borderEffect.radiusProperty(), 10);
-                // Crear un KeyFrame para especificar la duración y el valor final del KeyValue
-                KeyFrame keyFrame = new KeyFrame(Duration.seconds(1.2), keyValue);
-                // Crear un Timeline con el KeyFrame y configurar el evento de finalización
-                Timeline timeline = new Timeline(keyFrame);
-                timeline.setOnFinished(e -> imgview5.setEffect(null)); // Eliminar el efecto después de 2 segundos
-                timeline.play();
-            } catch (IOException ex) {
-                System.out.println("Error imagen 1");
-            }
-        }
-
+        imagesViewsClick(4,imgview5);
     }
-
     @FXML
     private void imgViewClick6(MouseEvent event) {
-        if (isChangingFace) {
-            String currentPath1 = currentPathFaces.get(5).getPath() + ".png";
-            DropShadow borderEffect = new DropShadow();
-            borderEffect.setColor(Color.BLACK);
-            borderEffect.setRadius(20); // Ajustar el valor para hacer el borde más grueso
-            borderEffect.setSpread(0.6); // Ajustar el valor para controlar la propagación del efecto
-            try ( FileInputStream input = new FileInputStream(App.fileImagesFaces + currentPath1)) {
-                Image img = new Image(input);
-                imgViewEmoji.setImage(img);
-                imgViewEmoji.setFitHeight(300);
-                imgViewEmoji.setFitWidth(300);
-                imgview6.setEffect(borderEffect);
-
-                KeyValue keyValue = new KeyValue(borderEffect.radiusProperty(), 10);
-                // Crear un KeyFrame para especificar la duración y el valor final del KeyValue
-                KeyFrame keyFrame = new KeyFrame(Duration.seconds(1.2), keyValue);
-                // Crear un Timeline con el KeyFrame y configurar el evento de finalización
-                Timeline timeline = new Timeline(keyFrame);
-                timeline.setOnFinished(e -> imgview6.setEffect(null)); // Eliminar el efecto después de 2 segundos
-                timeline.play();
-            } catch (IOException ex) {
-                System.out.println("Error imagen 1");
-            }
-        } else if (isChangingEye) {
-            String currentPath1 = currentPathEyes.get(5).getPath() + ".png";
-            DropShadow borderEffect = new DropShadow();
-            borderEffect.setColor(Color.BLACK);
-            borderEffect.setRadius(20); // Ajustar el valor para hacer el borde más grueso
-            borderEffect.setSpread(0.6); // Ajustar el valor para controlar la propagación del efecto
-            try ( FileInputStream input = new FileInputStream(App.fileImagesEyes + currentPath1)) {
-                Image img = new Image(input);
-                imgViewEyes.setImage(img);
-                imgViewEyes.setFitHeight(100);
-                imgViewEyes.setFitWidth(100);
-                imgview6.setEffect(borderEffect);
-
-                KeyValue keyValue = new KeyValue(borderEffect.radiusProperty(), 10);
-                // Crear un KeyFrame para especificar la duración y el valor final del KeyValue
-                KeyFrame keyFrame = new KeyFrame(Duration.seconds(1.2), keyValue);
-                // Crear un Timeline con el KeyFrame y configurar el evento de finalización
-                Timeline timeline = new Timeline(keyFrame);
-                timeline.setOnFinished(e -> imgview6.setEffect(null)); // Eliminar el efecto después de 2 segundos
-                timeline.play();
-            } catch (IOException ex) {
-                System.out.println("Error imagen 1");
-            }
-        } else if (isChangingMouth) {
-            String currentPath1 = currentPathMouths.get(5).getPath() + ".png";
-            DropShadow borderEffect = new DropShadow();
-            borderEffect.setColor(Color.BLACK);
-            borderEffect.setRadius(20); // Ajustar el valor para hacer el borde más grueso
-            borderEffect.setSpread(0.6); // Ajustar el valor para controlar la propagación del efecto
-            try ( FileInputStream input = new FileInputStream(App.fileImagesMouths + currentPath1)) {
-                Image img = new Image(input);
-                imgViewMouth.setImage(img);
-                imgViewMouth.setFitHeight(150);
-                imgViewMouth.setFitWidth(150);
-                imgview6.setEffect(borderEffect);
-
-                KeyValue keyValue = new KeyValue(borderEffect.radiusProperty(), 10);
-                // Crear un KeyFrame para especificar la duración y el valor final del KeyValue
-                KeyFrame keyFrame = new KeyFrame(Duration.seconds(1.2), keyValue);
-                // Crear un Timeline con el KeyFrame y configurar el evento de finalización
-                Timeline timeline = new Timeline(keyFrame);
-                timeline.setOnFinished(e -> imgview6.setEffect(null)); // Eliminar el efecto después de 2 segundos
-                timeline.play();
-            } catch (IOException ex) {
-                System.out.println("Error imagen 1");
-            }
-        }
+        imagesViewsClick(5,imgview6);
     }
+    
 
     @FXML
     private void btnFaceClick(ActionEvent event) {
@@ -901,26 +361,17 @@ public class PrincipalPaneController {
         isChangingEye = false;
         isChangingMouth = false;
         for (int i = 0; i <= 5; i++) {
-
+            ImageView imgview = imageViews.get(i);
             String currentPath = faces.get(i).getPath() + ".png";
             try ( FileInputStream input = new FileInputStream(App.fileImagesFaces + currentPath)) {
-                Image img = new Image(input);
-                ImageView imgview = imageViews.get(i);
-                imgview.setImage(img);
-                imgview.setFitHeight(50);
-                imgview.setFitWidth(50);
+                setImagesViews(input,  imgViewMouth, 50, 50);
             } catch (IOException ex) {
                 System.out.println("Error imagen 1");
             }
         }
-        hBoxImagesContainers.setSpacing(60);
-        hBoxImagesContainers.setAlignment(Pos.CENTER);
         String currentPath = faces.get(0).getPath() + ".png";
         try ( FileInputStream input = new FileInputStream(App.fileImagesFaces + currentPath)) {
-            Image img = new Image(input);
-            imgViewEmoji.setImage(img);
-            imgViewEmoji.setFitHeight(300);
-            imgViewEmoji.setFitWidth(300);
+            setImagesViews(input,  imgViewEmoji, 300, 300);
         } catch (IOException ex) {
             System.out.println("Error imagen 1");
         }
@@ -932,26 +383,17 @@ public class PrincipalPaneController {
         isChangingEye = true;
         isChangingMouth = false;
         for (int i = 0; i <= 5; i++) {
-
+            ImageView imgview = imageViews.get(i);
             String currentPath = eyes.get(i).getPath() + ".png";
             try ( FileInputStream input = new FileInputStream(App.fileImagesEyes + currentPath)) {
-                Image img = new Image(input);
-                ImageView imgview = imageViews.get(i);
-                imgview.setImage(img);
-                imgview.setFitHeight(50);
-                imgview.setFitWidth(50);
+                setImagesViews(input,  imgview, 50, 50);
             } catch (IOException ex) {
                 System.out.println("Error imagen 1");
             }
         }
-        hBoxImagesContainers.setSpacing(60);
-        hBoxImagesContainers.setAlignment(Pos.CENTER);
         String currentPath = eyes.get(0).getPath() + ".png";
         try ( FileInputStream input = new FileInputStream(App.fileImagesMouths + currentPath)) {
-            Image img = new Image(input);
-            imgViewEyes.setImage(img);
-            imgViewEyes.setFitHeight(300);
-            imgViewEyes.setFitWidth(300);
+            setImagesViews(input,  imgViewEyes, 150, 150);
         } catch (IOException ex) {
             System.out.println("Error imagen 1");
         }
@@ -963,30 +405,85 @@ public class PrincipalPaneController {
         isChangingEye = false;
         isChangingMouth = true;
         for (int i = 0; i <= 5; i++) {
-
+            ImageView imgview = imageViews.get(i);
             String currentPath = mouths.get(i).getPath() + ".png";
             try ( FileInputStream input = new FileInputStream(App.fileImagesMouths + currentPath)) {
-                Image img = new Image(input);
-                ImageView imgview = imageViews.get(i);
-                imgview.setImage(img);
-                imgview.setFitHeight(50);
-                imgview.setFitWidth(50);
+                setImagesViews(input,  imgview, 50, 50);
             } catch (IOException ex) {
                 System.out.println("Error imagen 1");
             }
         }
-        hBoxImagesContainers.setSpacing(60);
-        hBoxImagesContainers.setAlignment(Pos.CENTER);
         String currentPath = mouths.get(0).getPath() + ".png";
         try ( FileInputStream input = new FileInputStream(App.fileImagesMouths + currentPath)) {
-            Image img = new Image(input);
-            imgViewMouth.setImage(img);
-            imgViewMouth.setFitHeight(300);
-            imgViewMouth.setFitWidth(300);
+            setImagesViews(input,  imgViewMouth, 150, 150);
         } catch (IOException ex) {
             System.out.println("Error imagen 1");
         }
 
     }
+    private void imagesViewsClick(int actualIndex, ImageView imgView){
+        if (isChangingFace) {
+            String currentPath1 = currentPathFaces.get(actualIndex).getPath() + ".png";
+            setDropShadow(imgView);
+            try ( FileInputStream input = new FileInputStream(App.fileImagesFaces + currentPath1)) {
+                setImagesViews(input,  imgViewEmoji, 300, 300);
+            } catch (IOException ex) {
+                System.out.println("Error imagen 1");
+            }
+        } else if (isChangingEye) {
+            String currentPath1 = currentPathEyes.get(actualIndex).getPath() + ".png";
+            setDropShadow(imgView);
+            try ( FileInputStream input = new FileInputStream(App.fileImagesEyes + currentPath1)) {
+                setImagesViews(input,  imgViewEyes, 150, 150);
+            } catch (IOException ex) {
+                System.out.println("Error imagen 1");
+            }
+        } else if (isChangingMouth) {
+            String currentPath1 = currentPathMouths.get(actualIndex).getPath() + ".png";
+            setDropShadow(imgView);
+            try ( FileInputStream input = new FileInputStream(App.fileImagesMouths + currentPath1)) {
+                setImagesViews(input,  imgViewMouth, 150, 150);
+            } catch (IOException ex) {
+                System.out.println("Error imagen 1");
+            }
+        }
+    }
+    private void setDropShadow(ImageView imgview){
+        DropShadow borderEffect = new DropShadow();
+        borderEffect.setColor(Color.BLACK);
+        borderEffect.setRadius(20); // Ajustar el valor para hacer el borde más grueso
+        borderEffect.setSpread(0.6); // Ajustar el valor para controlar la propagación del efecto
+        imgview.setEffect(borderEffect);
+        KeyValue keyValue = new KeyValue(borderEffect.radiusProperty(), 10);
+        // Crear un KeyFrame para especificar la duración y el valor final del KeyValue
+        KeyFrame keyFrame = new KeyFrame(Duration.seconds(1.2), keyValue);
+        // Crear un Timeline con el KeyFrame y configurar el evento de finalización
+        Timeline timeline = new Timeline(keyFrame);
+        timeline.setOnFinished(e -> imgview.setEffect(null)); // Eliminar el efecto después de 2 segundos
+        timeline.play();
+    }
+    private void setImagesViews(FileInputStream input, ImageView imgView, int height, int width){
+        Image img = new Image(input);
+        imgView.setImage(img);
+        imgView.setFitHeight(height);
+        imgView.setFitWidth(width);
+        
+    }
+
+    @FXML
+    private void btnDeleteFaceClick(ActionEvent event) {
+        imgViewEmoji.setImage(null);
+    }
+
+    @FXML
+    private void btnDeleteMouthClick(ActionEvent event) {
+        imgViewMouth.setImage(null);
+    }
+
+    @FXML
+    private void btnDeleteEyesClick(ActionEvent event) {
+        imgViewEyes.setImage(null);
+    }
+    
 
 }

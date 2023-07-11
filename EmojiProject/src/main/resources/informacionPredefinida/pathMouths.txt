@@ -17,5 +17,3 @@ mouth_16
 mouth_17
 mouth_18
 mouth_19
-
-

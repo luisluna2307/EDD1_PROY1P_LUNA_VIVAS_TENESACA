@@ -34,7 +34,7 @@ public class Eye {
             String sCurrentLine;
             while ((sCurrentLine = br.readLine()) != null) {
                 Eye eye = new Eye(sCurrentLine);
-                eyes.add(eye);
+                eyes.addLast(eye);
                 //System.out.println(sCurrentLine);
             }
         } catch (IOException e) {
