@@ -34,6 +34,7 @@ import tdas.List;
 
 public class PrincipalPaneController {
 
+    private User currentUser;
     @FXML
     private HBox hBoxImagesContainers;
     @FXML
@@ -172,14 +173,13 @@ public class PrincipalPaneController {
         imageViews.addLast(imgview4);
         imageViews.addLast(imgview5);
         imageViews.addLast(imgview6);
-        initialXeye =imgViewEyes.getLayoutX();
+        initialXeye = imgViewEyes.getLayoutX();
         initialYeye = imgViewEyes.getLayoutY();
         initialXface = imgViewEmoji.getLayoutX();
         initialYface = imgViewEmoji.getLayoutY();
-        
+
         initialComponents();
-       
-        
+
     }
 
     private void initialComponents() {
@@ -552,7 +552,7 @@ public class PrincipalPaneController {
         } catch (IOException ex) {
             System.out.println("Error imagen 1");
         }
-        resetSliders(imgViewEyes,imgViewEyebrows,imgViewMouth,imgViewAccessories);
+        resetSliders(imgViewEyes, imgViewEyebrows, imgViewMouth, imgViewAccessories);
         sliderSizeEvent(imgViewEmoji);
         setPositionImage(imgViewEmoji);
     }
@@ -579,7 +579,7 @@ public class PrincipalPaneController {
         } catch (IOException ex) {
             System.out.println("Error imagen 1");
         }
-        resetSliders(imgViewEmoji,imgViewEyebrows,imgViewMouth,imgViewAccessories);
+        resetSliders(imgViewEmoji, imgViewEyebrows, imgViewMouth, imgViewAccessories);
         sliderSizeEvent(imgViewEyes);
         setPositionImage(imgViewEyes);
     }
@@ -606,7 +606,7 @@ public class PrincipalPaneController {
         } catch (IOException ex) {
             System.out.println("Error imagen 1");
         }
-        resetSliders(imgViewEyes,imgViewEyebrows,imgViewEmoji,imgViewAccessories);
+        resetSliders(imgViewEyes, imgViewEyebrows, imgViewEmoji, imgViewAccessories);
         sliderSizeEvent(imgViewMouth);
         setPositionImage(imgViewMouth);
 
@@ -634,7 +634,7 @@ public class PrincipalPaneController {
         } catch (IOException ex) {
             System.out.println("Error imagen 1");
         }
-        resetSliders(imgViewEyes,imgViewEmoji,imgViewMouth,imgViewAccessories);
+        resetSliders(imgViewEyes, imgViewEmoji, imgViewMouth, imgViewAccessories);
         sliderSizeEvent(imgViewEyebrows);
         setPositionImage(imgViewEyebrows);
     }
@@ -661,7 +661,7 @@ public class PrincipalPaneController {
         } catch (IOException ex) {
             System.out.println("Error imagen 1");
         }
-        resetSliders(imgViewEyes,imgViewEyebrows,imgViewMouth,imgViewEmoji);
+        resetSliders(imgViewEyes, imgViewEyebrows, imgViewMouth, imgViewEmoji);
         sliderSizeEvent(imgViewAccessories);
         setPositionImage(imgViewAccessories);
     }
@@ -770,24 +770,24 @@ public class PrincipalPaneController {
 
     @FXML
     private void SliderXEvent(DragEvent event) {
-        
+
     }
 
-    private void checkBounds(ImageView imageView){
+    private void checkBounds(ImageView imageView) {
         double containerWidth = anchorPaneImgs.getWidth();
         double containerHeight = anchorPaneImgs.getHeight();
         double imageWidth = imageView.getBoundsInLocal().getWidth() * imageView.getScaleX();
         double imageHeight = imageView.getBoundsInLocal().getHeight() * imageView.getScaleY();
         double maxWidth = containerWidth - (imageWidth - imageView.getFitWidth());
         double maxHeight = containerHeight - (imageHeight - imageView.getFitHeight());
-        
 
     }
+
     private void sliderSizeEvent(ImageView imageView) {
         sliderSize.setMin(0.5);
         sliderSize.setMax(1.0);
         sliderSize.setValue(5.0);
-        sliderSize.valueProperty().addListener((observables, oldValue, newValue)->{
+        sliderSize.valueProperty().addListener((observables, oldValue, newValue) -> {
             double zoom = newValue.doubleValue();
             imageView.setScaleX(zoom);
             imageView.setScaleY(zoom);
@@ -796,11 +796,12 @@ public class PrincipalPaneController {
     }
 
     private void setPositionImage(ImageView imageView) {
-        
+
         imageView.translateXProperty().bind(sliderX.valueProperty());
         imageView.translateYProperty().bind(sliderY.valueProperty());
     }
-    private void resetSliders(ImageView imgView1, ImageView imgView2,ImageView imgView3, ImageView imgView4){
+
+    private void resetSliders(ImageView imgView1, ImageView imgView2, ImageView imgView3, ImageView imgView4) {
         imgView1.translateXProperty().unbind();
         imgView1.translateYProperty().unbind();
         imgView2.translateXProperty().unbind();
@@ -811,5 +812,9 @@ public class PrincipalPaneController {
         imgView4.translateYProperty().unbind();
         sliderX.setValue(sliderX.getMin());
         sliderY.setValue(sliderY.getMin());
+    }
+
+    public void recoverUser(User u) {
+        this.currentUser = u;
     }
 }

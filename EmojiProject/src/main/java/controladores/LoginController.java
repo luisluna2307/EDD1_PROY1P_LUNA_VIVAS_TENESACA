@@ -44,6 +44,8 @@ public class LoginController {
             s.close();
             FXMLLoader fxmLoader = new FXMLLoader(getClass().getResource("principalPane.fxml"));
             Parent root = fxmLoader.load();
+            PrincipalPaneController contrPrincipalPane = fxmLoader.getController();
+            contrPrincipalPane.recoverUser(loggedInUser);
             Scene scene = new Scene(root);
             Stage stage = new Stage();
             stage.setScene(scene);
