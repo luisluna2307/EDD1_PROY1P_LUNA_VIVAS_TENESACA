@@ -88,16 +88,4 @@ public class User {
         return usuario;
     }
 
-    private boolean registerUser(String username, String password) {
-
-        try ( BufferedWriter bw = new BufferedWriter(new FileWriter(App.filePathUsers + "users.txt", true))) {
-            bw.write(username + "," + password);
-            return true;
-        } catch (IOException e) {
-            System.out.println("No se pudo registrar a este nuevo usuario");
-            return false;
-        }
-
-    }
-
 }
