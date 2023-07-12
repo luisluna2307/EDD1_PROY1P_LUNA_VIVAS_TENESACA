@@ -11,10 +11,12 @@ import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.Slider;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.effect.InnerShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.DragEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
@@ -64,6 +66,10 @@ public class PrincipalPaneController {
     private boolean isChangingMouth;
     private boolean isChangingAccessories;
     private boolean isChangingEyebrows;
+    double initialXeye;
+    double initialYeye;
+    double initialXface;
+    double initialYface;
     @FXML
     private ImageView imgViewEmoji;
     @FXML
@@ -106,6 +112,14 @@ public class PrincipalPaneController {
     private ImageView imgViewEyebrows;
     @FXML
     private ImageView imgViewAccessories;
+    @FXML
+    private Slider sliderSize;
+    @FXML
+    private Slider sliderX;
+    @FXML
+    private Slider sliderY;
+    @FXML
+    private AnchorPane anchorPaneImgs;
 
     public void initialize() {
         currentIndex = 0;
@@ -154,9 +168,14 @@ public class PrincipalPaneController {
         imageViews.addLast(imgview4);
         imageViews.addLast(imgview5);
         imageViews.addLast(imgview6);
-
+        initialXeye =imgViewEyes.getLayoutX();
+        initialYeye = imgViewEyes.getLayoutY();
+        initialXface = imgViewEmoji.getLayoutX();
+        initialYface = imgViewEmoji.getLayoutY();
+        
         initialComponents();
-
+       
+        
     }
 
     private void initialComponents() {
@@ -529,6 +548,9 @@ public class PrincipalPaneController {
         } catch (IOException ex) {
             System.out.println("Error imagen 1");
         }
+        resetSliders(imgViewEyes,imgViewEyebrows,imgViewMouth,imgViewAccessories);
+        sliderSizeEvent(imgViewEmoji);
+        setPositionImage(imgViewEmoji);
     }
 
     @FXML
@@ -548,11 +570,14 @@ public class PrincipalPaneController {
             }
         }
         String currentPath = eyes.get(0).getPath() + ".png";
-        try ( FileInputStream input = new FileInputStream(App.fileImagesMouths + currentPath)) {
+        try ( FileInputStream input = new FileInputStream(App.fileImagesEyes + currentPath)) {
             setImagesViews(input, imgViewEyes, 150, 150);
         } catch (IOException ex) {
             System.out.println("Error imagen 1");
         }
+        resetSliders(imgViewEmoji,imgViewEyebrows,imgViewMouth,imgViewAccessories);
+        sliderSizeEvent(imgViewEyes);
+        setPositionImage(imgViewEyes);
     }
 
     @FXML
@@ -577,6 +602,9 @@ public class PrincipalPaneController {
         } catch (IOException ex) {
             System.out.println("Error imagen 1");
         }
+        resetSliders(imgViewEyes,imgViewEyebrows,imgViewEmoji,imgViewAccessories);
+        sliderSizeEvent(imgViewMouth);
+        setPositionImage(imgViewMouth);
 
     }
     
@@ -602,6 +630,9 @@ public class PrincipalPaneController {
         } catch (IOException ex) {
             System.out.println("Error imagen 1");
         }
+        resetSliders(imgViewEyes,imgViewEmoji,imgViewMouth,imgViewAccessories);
+        sliderSizeEvent(imgViewEyebrows);
+        setPositionImage(imgViewEyebrows);
     }
     @FXML
     private void btnAccessoriesClick(ActionEvent event) {
@@ -625,6 +656,9 @@ public class PrincipalPaneController {
         } catch (IOException ex) {
             System.out.println("Error imagen 1");
         }
+        resetSliders(imgViewEyes,imgViewEyebrows,imgViewMouth,imgViewEmoji);
+        sliderSizeEvent(imgViewAccessories);
+        setPositionImage(imgViewAccessories);
     }
     
     
@@ -723,4 +757,48 @@ public class PrincipalPaneController {
     private void btnDeleteAccessoriesClick(ActionEvent event) {
     }
 
+    @FXML
+    private void SliderXEvent(DragEvent event) {
+        
+    }
+
+    private void checkBounds(ImageView imageView){
+        double containerWidth = anchorPaneImgs.getWidth();
+        double containerHeight = anchorPaneImgs.getHeight();
+        double imageWidth = imageView.getBoundsInLocal().getWidth() * imageView.getScaleX();
+        double imageHeight = imageView.getBoundsInLocal().getHeight() * imageView.getScaleY();
+        double maxWidth = containerWidth - (imageWidth - imageView.getFitWidth());
+        double maxHeight = containerHeight - (imageHeight - imageView.getFitHeight());
+        
+
+    }
+    private void sliderSizeEvent(ImageView imageView) {
+        sliderSize.setMin(0.5);
+        sliderSize.setMax(1.0);
+        sliderSize.setValue(5.0);
+        sliderSize.valueProperty().addListener((observables, oldValue, newValue)->{
+            double zoom = newValue.doubleValue();
+            imageView.setScaleX(zoom);
+            imageView.setScaleY(zoom);
+            checkBounds(imageView);
+        });
+    }
+
+    private void setPositionImage(ImageView imageView) {
+        
+        imageView.translateXProperty().bind(sliderX.valueProperty());
+        imageView.translateYProperty().bind(sliderY.valueProperty());
+    }
+    private void resetSliders(ImageView imgView1, ImageView imgView2,ImageView imgView3, ImageView imgView4){
+        imgView1.translateXProperty().unbind();
+        imgView1.translateYProperty().unbind();
+        imgView2.translateXProperty().unbind();
+        imgView2.translateYProperty().unbind();
+        imgView3.translateXProperty().unbind();
+        imgView3.translateYProperty().unbind();
+        imgView4.translateXProperty().unbind();
+        imgView4.translateYProperty().unbind();
+        sliderX.setValue(sliderX.getMin());
+        sliderY.setValue(sliderY.getMin());
+    }
 }
