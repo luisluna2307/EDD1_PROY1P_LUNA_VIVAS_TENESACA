@@ -20,6 +20,7 @@
                   <ImageView fx:id="imgview5" fitHeight="90.0" fitWidth="140.0" onMouseClicked="#imgViewClick5" pickOnBounds="true" preserveRatio="true" />
                   <ImageView fx:id="imgview6" fitHeight="90.0" fitWidth="140.0" onMouseClicked="#imgViewClick6" pickOnBounds="true" preserveRatio="true" />
                </children></HBox>
+            <Button fx:id="saveButton" layoutX="120.0" layoutY="172.0" mnemonicParsing="false" onAction="#saveProject" text="Guardar" />
             <Button fx:id="nextButton" layoutX="1034.0" layoutY="58.0" mnemonicParsing="false" onAction="#next" text="Next" />
             <Button fx:id="previusButton" layoutX="120.0" layoutY="58.0" mnemonicParsing="false" onAction="#previous" text="Previo" />
             <Button fx:id="btnFace" layoutX="251.0" layoutY="13.0" mnemonicParsing="false" onAction="#btnFaceClick" text="Face" />
@@ -32,7 +33,11 @@
             <Button fx:id="btnDeleteEyebrows" layoutX="613.0" layoutY="13.0" mnemonicParsing="false" onAction="#btnDeleteEyebrowsClick" text="x" />
             <Button fx:id="btnAccessories" layoutX="654.0" layoutY="13.0" mnemonicParsing="false" onAction="#btnAccessoriesClick" text="Accessories" />
             <Button fx:id="btnDeleteAccessories" layoutX="731.0" layoutY="13.0" mnemonicParsing="false" onAction="#btnDeleteAccessoriesClick" text="x" />
+
             <Slider fx:id="sliderSize" layoutX="524.0" layoutY="150.0" />
+
+            <Button fx:id="loadButton" layoutX="199.0" layoutY="172.0" mnemonicParsing="false" onAction="#loadProject" text="Cargar" />
+
              </children>
       </AnchorPane>
    </bottom>

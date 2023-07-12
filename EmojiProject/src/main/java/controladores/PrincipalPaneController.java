@@ -41,6 +41,10 @@ public class PrincipalPaneController {
     @FXML
     private Button nextButton;
     @FXML
+    private Button saveButton;
+    @FXML
+    private Button loadButton;
+    @FXML
     private Button previusButton;
     @FXML
     private AnchorPane emojiContainer;
@@ -128,11 +132,11 @@ public class PrincipalPaneController {
         mouths = Mouth.loadMouths(App.pathMouths);
         eyebrows = Eyebrow.loadEyebrows(App.pathEyebrows);
         accessories = Accessories.loadAccessories(App.pathAccessories);
-        
+
         imageViewsFace = new LinkedList<>();
         imageViewsEye = new LinkedList<>();
         imageViewsMouth = new LinkedList<>();
-        imageViewsEyebrows =  new LinkedList<>();
+        imageViewsEyebrows = new LinkedList<>();
         imageViewsAccessories = new LinkedList<>();
         currentPathFaces = new LinkedList<>();
         currentPathEyes = new LinkedList<>();
@@ -463,7 +467,7 @@ public class PrincipalPaneController {
             } catch (IOException ex) {
                 System.out.println("Error imagen 1");
             }
-        }else if (isChangingEyebrows) {
+        } else if (isChangingEyebrows) {
             for (int i = 0; i < imageViews.size(); i++) {
                 Eyebrow actualEyebrows = currentPathEyebrows.get(i);
                 Eyebrow foundEyebrows = actualEyebrows;
@@ -607,7 +611,7 @@ public class PrincipalPaneController {
         setPositionImage(imgViewMouth);
 
     }
-    
+
     @FXML
     private void btnEyebrowsClick(ActionEvent event) {
         isChangingFace = false;
@@ -634,6 +638,7 @@ public class PrincipalPaneController {
         sliderSizeEvent(imgViewEyebrows);
         setPositionImage(imgViewEyebrows);
     }
+
     @FXML
     private void btnAccessoriesClick(ActionEvent event) {
         isChangingFace = false;
@@ -660,8 +665,7 @@ public class PrincipalPaneController {
         sliderSizeEvent(imgViewAccessories);
         setPositionImage(imgViewAccessories);
     }
-    
-    
+
     private void imagesViewsClick(int actualIndex, ImageView imgView) {
         if (isChangingFace) {
             String currentPath1 = currentPathFaces.get(actualIndex).getPath() + ".png";
@@ -687,7 +691,7 @@ public class PrincipalPaneController {
             } catch (IOException ex) {
                 System.out.println("Error imagen 1");
             }
-        } else if( isChangingEyebrows){
+        } else if (isChangingEyebrows) {
             String currentPath1 = currentPathEyebrows.get(actualIndex).getPath() + ".png";
             setDropShadow(imgView);
             try ( FileInputStream input = new FileInputStream(App.fileImagesEyebrows + currentPath1)) {
@@ -695,7 +699,7 @@ public class PrincipalPaneController {
             } catch (IOException ex) {
                 System.out.println("Error imagen 1");
             }
-        }else if(isChangingAccessories){
+        } else if (isChangingAccessories) {
             String currentPath1 = currentPathAccessories.get(actualIndex).getPath() + ".png";
             setDropShadow(imgView);
             try ( FileInputStream input = new FileInputStream(App.fileImagesAccessories + currentPath1)) {
@@ -744,17 +748,24 @@ public class PrincipalPaneController {
         imgViewEyes.setImage(null);
     }
 
-    
-
     @FXML
     private void btnDeleteEyebrowsClick(ActionEvent event) {
-        
+        imgViewEyebrows.setImage(null);
     }
-
-    
 
     @FXML
     private void btnDeleteAccessoriesClick(ActionEvent event) {
+        imgViewAccessories.setImage(null);
+    }
+
+    @FXML
+    private void loadProject(ActionEvent event) {
+
+    }
+
+    @FXML
+    private void saveProject(ActionEvent event) {
+
     }
 
     @FXML
