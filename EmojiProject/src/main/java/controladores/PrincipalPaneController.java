@@ -1,5 +1,7 @@
 package controladores;
 
+import javafx.embed.swing.*;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import javafx.util.Duration;
@@ -9,6 +11,7 @@ import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
+import javafx.scene.SnapshotParameters;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
@@ -16,12 +19,16 @@ import javafx.scene.effect.DropShadow;
 import javafx.scene.effect.InnerShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.image.WritableImage;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
+import javax.imageio.ImageIO;
 import modelo.User;
 import proyecto.Accessories;
 import proyecto.Eye;
@@ -44,11 +51,15 @@ public class PrincipalPaneController {
     @FXML
     private Button saveButton;
     @FXML
+    private Button saveEmojiBtn;
+    @FXML
     private Button loadButton;
     @FXML
     private Button previusButton;
     @FXML
     private AnchorPane emojiContainer;
+    @FXML
+    private AnchorPane emojiImg;
     private CDoublyLinkedList<Face> faces;
     private CDoublyLinkedList<Mouth> mouths;
     private CDoublyLinkedList<Eye> eyes;
@@ -188,7 +199,7 @@ public class PrincipalPaneController {
         for (int i = 0; i <= 5; i++) {
             String currentPath = faces.get(i).getPath() + ".png";
             ImageView imgview = imageViews.get(i);
-            try ( FileInputStream input = new FileInputStream(App.fileImagesFaces + currentPath)) {
+            try (FileInputStream input = new FileInputStream(App.fileImagesFaces + currentPath)) {
                 imageViewsFace.addLast(imgview);
                 setImagesViews(input, imgview, 50, 50);
             } catch (IOException ex) {
@@ -198,7 +209,7 @@ public class PrincipalPaneController {
         hBoxImagesContainers.setSpacing(60);
         hBoxImagesContainers.setAlignment(Pos.CENTER);
         String currentPath = faces.get(0).getPath() + ".png";
-        try ( FileInputStream input = new FileInputStream(App.fileImagesFaces + currentPath)) {
+        try (FileInputStream input = new FileInputStream(App.fileImagesFaces + currentPath)) {
             setImagesViews(input, imgViewEmoji, 300, 300);
         } catch (IOException ex) {
             System.out.println("Error imagen 1");
@@ -222,7 +233,7 @@ public class PrincipalPaneController {
                 ImageView imageView = imageViews.get(i);
                 String currentPath = currentPathFaces.get(i).getPath() + ".png";
                 imageViewsFace.set(i, imageView);
-                try ( FileInputStream input = new FileInputStream(App.fileImagesFaces + currentPath)) {
+                try (FileInputStream input = new FileInputStream(App.fileImagesFaces + currentPath)) {
                     setImagesViews(input, imageView, 50, 50);
                 } catch (IOException ex) {
                     System.out.println("Error imagen 1");
@@ -230,7 +241,7 @@ public class PrincipalPaneController {
             }
             String currentPath1 = currentPathFaces.get(5).getPath() + ".png";
             setDropShadow(imgview6);
-            try ( FileInputStream input = new FileInputStream(App.fileImagesFaces + currentPath1)) {
+            try (FileInputStream input = new FileInputStream(App.fileImagesFaces + currentPath1)) {
                 setImagesViews(input, imgViewEmoji, 300, 300);
             } catch (IOException ex) {
                 System.out.println("Error imagen 1");
@@ -250,7 +261,7 @@ public class PrincipalPaneController {
                 ImageView imageView = imageViews.get(i);
                 String currentPath = currentPathEyes.get(i).getPath() + ".png";
                 imageViewsEye.set(i, imageView);
-                try ( FileInputStream input = new FileInputStream(App.fileImagesEyes + currentPath)) {
+                try (FileInputStream input = new FileInputStream(App.fileImagesEyes + currentPath)) {
                     setImagesViews(input, imageView, 50, 50);
                 } catch (IOException ex) {
                     System.out.println("Error: image not found");
@@ -258,7 +269,7 @@ public class PrincipalPaneController {
             }
             String currentPath1 = currentPathEyes.get(5).getPath() + ".png";
             setDropShadow(imgview6);
-            try ( FileInputStream input = new FileInputStream(App.fileImagesEyes + currentPath1)) {
+            try (FileInputStream input = new FileInputStream(App.fileImagesEyes + currentPath1)) {
                 setImagesViews(input, imgViewEyes, 150, 150);
             } catch (IOException ex) {
                 System.out.println("Error imagen 1");
@@ -277,7 +288,7 @@ public class PrincipalPaneController {
                 ImageView imageView = imageViews.get(i);
                 String currentPath = currentPathMouths.get(i).getPath() + ".png";
                 imageViewsMouth.set(i, imageView);
-                try ( FileInputStream input = new FileInputStream(App.fileImagesMouths + currentPath)) {
+                try (FileInputStream input = new FileInputStream(App.fileImagesMouths + currentPath)) {
                     setImagesViews(input, imageView, 50, 50);
                 } catch (IOException ex) {
                     System.out.println("Error: image not found");
@@ -285,7 +296,7 @@ public class PrincipalPaneController {
             }
             String currentPath1 = currentPathMouths.get(5).getPath() + ".png";
             setDropShadow(imgview6);
-            try ( FileInputStream input = new FileInputStream(App.fileImagesMouths + currentPath1)) {
+            try (FileInputStream input = new FileInputStream(App.fileImagesMouths + currentPath1)) {
                 setImagesViews(input, imgViewMouth, 150, 150);
             } catch (IOException ex) {
                 System.out.println("Error imagen 1");
@@ -304,7 +315,7 @@ public class PrincipalPaneController {
                 ImageView imageView = imageViews.get(i);
                 String currentPath = currentPathEyebrows.get(i).getPath() + ".png";
                 imageViewsEyebrows.set(i, imageView);
-                try ( FileInputStream input = new FileInputStream(App.fileImagesEyebrows + currentPath)) {
+                try (FileInputStream input = new FileInputStream(App.fileImagesEyebrows + currentPath)) {
                     setImagesViews(input, imageView, 50, 50);
                 } catch (IOException ex) {
                     System.out.println("Error: image not found");
@@ -312,7 +323,7 @@ public class PrincipalPaneController {
             }
             String currentPath1 = currentPathEyebrows.get(5).getPath() + ".png";
             setDropShadow(imgview6);
-            try ( FileInputStream input = new FileInputStream(App.fileImagesEyebrows + currentPath1)) {
+            try (FileInputStream input = new FileInputStream(App.fileImagesEyebrows + currentPath1)) {
                 setImagesViews(input, imgViewEyebrows, 150, 150);
             } catch (IOException ex) {
                 System.out.println("Error imagen 1");
@@ -331,7 +342,7 @@ public class PrincipalPaneController {
                 ImageView imageView = imageViews.get(i);
                 String currentPath = currentPathAccessories.get(i).getPath() + ".png";
                 imageViewsAccessories.set(i, imageView);
-                try ( FileInputStream input = new FileInputStream(App.fileImagesAccessories + currentPath)) {
+                try (FileInputStream input = new FileInputStream(App.fileImagesAccessories + currentPath)) {
                     setImagesViews(input, imageView, 50, 50);
                 } catch (IOException ex) {
                     System.out.println("Error: image not found");
@@ -339,7 +350,7 @@ public class PrincipalPaneController {
             }
             String currentPath1 = currentPathAccessories.get(5).getPath() + ".png";
             setDropShadow(imgview6);
-            try ( FileInputStream input = new FileInputStream(App.fileImagesAccessories + currentPath1)) {
+            try (FileInputStream input = new FileInputStream(App.fileImagesAccessories + currentPath1)) {
                 setImagesViews(input, imgViewAccessories, 150, 150);
             } catch (IOException ex) {
                 System.out.println("Error imagen 1");
@@ -364,7 +375,7 @@ public class PrincipalPaneController {
                 ImageView imageView = imageViews.get(i);
                 String currentPath = currentPathFaces.get(i).getPath() + ".png";
                 imageViewsFace.set(i, imageView);
-                try ( FileInputStream input = new FileInputStream(App.fileImagesFaces + currentPath)) {
+                try (FileInputStream input = new FileInputStream(App.fileImagesFaces + currentPath)) {
                     setImagesViews(input, imageView, 50, 50);
                 } catch (IOException ex) {
                     System.out.println("Error imagen 1");
@@ -372,7 +383,7 @@ public class PrincipalPaneController {
             }
             String currentPath1 = currentPathFaces.get(0).getPath() + ".png";
             setDropShadow(imgview1);
-            try ( FileInputStream input = new FileInputStream(App.fileImagesFaces + currentPath1)) {
+            try (FileInputStream input = new FileInputStream(App.fileImagesFaces + currentPath1)) {
                 setImagesViews(input, imgViewEmoji, 300, 300);
             } catch (IOException ex) {
                 System.out.println("Error imagen 1");
@@ -394,7 +405,7 @@ public class PrincipalPaneController {
                 ImageView imageView = imageViews.get(i);
                 String currentPath = currentPathEyes.get(i).getPath() + ".png";
                 imageViewsEye.set(i, imageView);
-                try ( FileInputStream input = new FileInputStream(App.fileImagesEyes + currentPath)) {
+                try (FileInputStream input = new FileInputStream(App.fileImagesEyes + currentPath)) {
                     setImagesViews(input, imageView, 50, 50);
                 } catch (IOException ex) {
                     System.out.println("Error imagen 1");
@@ -403,7 +414,7 @@ public class PrincipalPaneController {
             String currentPath1 = currentPathEyes.get(0).getPath() + ".png";
             setDropShadow(imgview1);
 
-            try ( FileInputStream input = new FileInputStream(App.fileImagesEyes + currentPath1)) {
+            try (FileInputStream input = new FileInputStream(App.fileImagesEyes + currentPath1)) {
                 setImagesViews(input, imgViewEyes, 150, 150);
 
             } catch (IOException ex) {
@@ -423,7 +434,7 @@ public class PrincipalPaneController {
                 ImageView imageView = imageViews.get(i);
                 String currentPath = currentPathMouths.get(i).getPath() + ".png";
                 imageViewsMouth.set(i, imageView);
-                try ( FileInputStream input = new FileInputStream(App.fileImagesMouths + currentPath)) {
+                try (FileInputStream input = new FileInputStream(App.fileImagesMouths + currentPath)) {
                     setImagesViews(input, imageView, 50, 50);
                 } catch (IOException ex) {
                     System.out.println("Error imagen 1");
@@ -433,7 +444,7 @@ public class PrincipalPaneController {
             }
             String currentPath1 = currentPathMouths.get(0).getPath() + ".png";
             setDropShadow(imgview1);
-            try ( FileInputStream input = new FileInputStream(App.fileImagesMouths + currentPath1)) {
+            try (FileInputStream input = new FileInputStream(App.fileImagesMouths + currentPath1)) {
                 setImagesViews(input, imgViewMouth, 150, 150);
             } catch (IOException ex) {
                 System.out.println("Error imagen 1");
@@ -452,7 +463,7 @@ public class PrincipalPaneController {
                 ImageView imageView = imageViews.get(i);
                 String currentPath = currentPathAccessories.get(i).getPath() + ".png";
                 imageViewsAccessories.set(i, imageView);
-                try ( FileInputStream input = new FileInputStream(App.fileImagesAccessories + currentPath)) {
+                try (FileInputStream input = new FileInputStream(App.fileImagesAccessories + currentPath)) {
                     setImagesViews(input, imageView, 50, 50);
                 } catch (IOException ex) {
                     System.out.println("Error imagen 1");
@@ -462,7 +473,7 @@ public class PrincipalPaneController {
             }
             String currentPath1 = currentPathAccessories.get(0).getPath() + ".png";
             setDropShadow(imgview1);
-            try ( FileInputStream input = new FileInputStream(App.fileImagesAccessories + currentPath1)) {
+            try (FileInputStream input = new FileInputStream(App.fileImagesAccessories + currentPath1)) {
                 setImagesViews(input, imgViewAccessories, 150, 150);
             } catch (IOException ex) {
                 System.out.println("Error imagen 1");
@@ -481,7 +492,7 @@ public class PrincipalPaneController {
                 ImageView imageView = imageViews.get(i);
                 String currentPath = currentPathEyebrows.get(i).getPath() + ".png";
                 imageViewsEyebrows.set(i, imageView);
-                try ( FileInputStream input = new FileInputStream(App.fileImagesEyebrows + currentPath)) {
+                try (FileInputStream input = new FileInputStream(App.fileImagesEyebrows + currentPath)) {
                     setImagesViews(input, imageView, 50, 50);
                 } catch (IOException ex) {
                     System.out.println("Error imagen 1");
@@ -491,7 +502,7 @@ public class PrincipalPaneController {
             }
             String currentPath1 = currentPathEyebrows.get(0).getPath() + ".png";
             setDropShadow(imgview1);
-            try ( FileInputStream input = new FileInputStream(App.fileImagesEyebrows + currentPath1)) {
+            try (FileInputStream input = new FileInputStream(App.fileImagesEyebrows + currentPath1)) {
                 setImagesViews(input, imgViewEyebrows, 150, 150);
             } catch (IOException ex) {
                 System.out.println("Error imagen 1");
@@ -540,14 +551,14 @@ public class PrincipalPaneController {
         for (int i = 0; i <= 5; i++) {
             ImageView imgview = imageViews.get(i);
             String currentPath = faces.get(i).getPath() + ".png";
-            try ( FileInputStream input = new FileInputStream(App.fileImagesFaces + currentPath)) {
+            try (FileInputStream input = new FileInputStream(App.fileImagesFaces + currentPath)) {
                 setImagesViews(input, imgview, 50, 50);
             } catch (IOException ex) {
                 System.out.println("Error imagen 1");
             }
         }
         String currentPath = faces.get(0).getPath() + ".png";
-        try ( FileInputStream input = new FileInputStream(App.fileImagesFaces + currentPath)) {
+        try (FileInputStream input = new FileInputStream(App.fileImagesFaces + currentPath)) {
             setImagesViews(input, imgViewEmoji, 300, 300);
         } catch (IOException ex) {
             System.out.println("Error imagen 1");
@@ -567,14 +578,14 @@ public class PrincipalPaneController {
         for (int i = 0; i <= 5; i++) {
             ImageView imgview = imageViews.get(i);
             String currentPath = eyes.get(i).getPath() + ".png";
-            try ( FileInputStream input = new FileInputStream(App.fileImagesEyes + currentPath)) {
+            try (FileInputStream input = new FileInputStream(App.fileImagesEyes + currentPath)) {
                 setImagesViews(input, imgview, 50, 50);
             } catch (IOException ex) {
                 System.out.println("Error imagen 1");
             }
         }
         String currentPath = eyes.get(0).getPath() + ".png";
-        try ( FileInputStream input = new FileInputStream(App.fileImagesEyes + currentPath)) {
+        try (FileInputStream input = new FileInputStream(App.fileImagesEyes + currentPath)) {
             setImagesViews(input, imgViewEyes, 150, 150);
         } catch (IOException ex) {
             System.out.println("Error imagen 1");
@@ -594,14 +605,14 @@ public class PrincipalPaneController {
         for (int i = 0; i <= 5; i++) {
             ImageView imgview = imageViews.get(i);
             String currentPath = mouths.get(i).getPath() + ".png";
-            try ( FileInputStream input = new FileInputStream(App.fileImagesMouths + currentPath)) {
+            try (FileInputStream input = new FileInputStream(App.fileImagesMouths + currentPath)) {
                 setImagesViews(input, imgview, 50, 50);
             } catch (IOException ex) {
                 System.out.println("Error imagen 1");
             }
         }
         String currentPath = mouths.get(0).getPath() + ".png";
-        try ( FileInputStream input = new FileInputStream(App.fileImagesMouths + currentPath)) {
+        try (FileInputStream input = new FileInputStream(App.fileImagesMouths + currentPath)) {
             setImagesViews(input, imgViewMouth, 150, 150);
         } catch (IOException ex) {
             System.out.println("Error imagen 1");
@@ -622,14 +633,14 @@ public class PrincipalPaneController {
         for (int i = 0; i <= 5; i++) {
             ImageView imgview = imageViews.get(i);
             String currentPath = eyebrows.get(i).getPath() + ".png";
-            try ( FileInputStream input = new FileInputStream(App.fileImagesEyebrows + currentPath)) {
+            try (FileInputStream input = new FileInputStream(App.fileImagesEyebrows + currentPath)) {
                 setImagesViews(input, imgview, 50, 50);
             } catch (IOException ex) {
                 System.out.println("Error imagen 1");
             }
         }
         String currentPath = eyebrows.get(0).getPath() + ".png";
-        try ( FileInputStream input = new FileInputStream(App.fileImagesEyebrows + currentPath)) {
+        try (FileInputStream input = new FileInputStream(App.fileImagesEyebrows + currentPath)) {
             setImagesViews(input, imgViewEyebrows, 150, 150);
         } catch (IOException ex) {
             System.out.println("Error imagen 1");
@@ -649,14 +660,14 @@ public class PrincipalPaneController {
         for (int i = 0; i <= 5; i++) {
             ImageView imgview = imageViews.get(i);
             String currentPath = accessories.get(i).getPath() + ".png";
-            try ( FileInputStream input = new FileInputStream(App.fileImagesAccessories + currentPath)) {
+            try (FileInputStream input = new FileInputStream(App.fileImagesAccessories + currentPath)) {
                 setImagesViews(input, imgview, 50, 50);
             } catch (IOException ex) {
                 System.out.println("Error imagen 1");
             }
         }
         String currentPath = accessories.get(0).getPath() + ".png";
-        try ( FileInputStream input = new FileInputStream(App.fileImagesAccessories + currentPath)) {
+        try (FileInputStream input = new FileInputStream(App.fileImagesAccessories + currentPath)) {
             setImagesViews(input, imgViewAccessories, 150, 150);
         } catch (IOException ex) {
             System.out.println("Error imagen 1");
@@ -670,7 +681,7 @@ public class PrincipalPaneController {
         if (isChangingFace) {
             String currentPath1 = currentPathFaces.get(actualIndex).getPath() + ".png";
             setDropShadow(imgView);
-            try ( FileInputStream input = new FileInputStream(App.fileImagesFaces + currentPath1)) {
+            try (FileInputStream input = new FileInputStream(App.fileImagesFaces + currentPath1)) {
                 setImagesViews(input, imgViewEmoji, 300, 300);
             } catch (IOException ex) {
                 System.out.println("Error imagen 1");
@@ -678,7 +689,7 @@ public class PrincipalPaneController {
         } else if (isChangingEye) {
             String currentPath1 = currentPathEyes.get(actualIndex).getPath() + ".png";
             setDropShadow(imgView);
-            try ( FileInputStream input = new FileInputStream(App.fileImagesEyes + currentPath1)) {
+            try (FileInputStream input = new FileInputStream(App.fileImagesEyes + currentPath1)) {
                 setImagesViews(input, imgViewEyes, 150, 150);
             } catch (IOException ex) {
                 System.out.println("Error imagen 1");
@@ -686,7 +697,7 @@ public class PrincipalPaneController {
         } else if (isChangingMouth) {
             String currentPath1 = currentPathMouths.get(actualIndex).getPath() + ".png";
             setDropShadow(imgView);
-            try ( FileInputStream input = new FileInputStream(App.fileImagesMouths + currentPath1)) {
+            try (FileInputStream input = new FileInputStream(App.fileImagesMouths + currentPath1)) {
                 setImagesViews(input, imgViewMouth, 150, 150);
             } catch (IOException ex) {
                 System.out.println("Error imagen 1");
@@ -694,7 +705,7 @@ public class PrincipalPaneController {
         } else if (isChangingEyebrows) {
             String currentPath1 = currentPathEyebrows.get(actualIndex).getPath() + ".png";
             setDropShadow(imgView);
-            try ( FileInputStream input = new FileInputStream(App.fileImagesEyebrows + currentPath1)) {
+            try (FileInputStream input = new FileInputStream(App.fileImagesEyebrows + currentPath1)) {
                 setImagesViews(input, imgViewEyebrows, 150, 150);
             } catch (IOException ex) {
                 System.out.println("Error imagen 1");
@@ -702,7 +713,7 @@ public class PrincipalPaneController {
         } else if (isChangingAccessories) {
             String currentPath1 = currentPathAccessories.get(actualIndex).getPath() + ".png";
             setDropShadow(imgView);
-            try ( FileInputStream input = new FileInputStream(App.fileImagesAccessories + currentPath1)) {
+            try (FileInputStream input = new FileInputStream(App.fileImagesAccessories + currentPath1)) {
                 setImagesViews(input, imgViewAccessories, 150, 150);
             } catch (IOException ex) {
                 System.out.println("Error imagen 1");
@@ -765,7 +776,58 @@ public class PrincipalPaneController {
 
     @FXML
     private void saveProject(ActionEvent event) {
+        
+    }
+    
+    /***
+     * Función para guardar el emoji realizado como imagen.
+     * Autor: Freddy Tenesaca.
+     * @param event 
+     */
+    @FXML
+    private void saveImg(ActionEvent event){
+        // Capturar una imagen de emojiContainer
+        SnapshotParameters parameters = new SnapshotParameters();
+        parameters.setFill(javafx.scene.paint.Color.TRANSPARENT);
+        WritableImage snapshot = emojiImg.snapshot(parameters, null);
 
+        // Crear un FileChooser para que el usuario seleccione la ubicación y el nombre del archivo
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Guardar imagen");
+        fileChooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("Imagen JPEG", "*.jpg"),
+                new FileChooser.ExtensionFilter("Imagen PNG", "*.png")
+        );
+
+        // Mostrar el cuadro de diálogo para guardar el archivo
+        Stage stage = (Stage) emojiImg.getScene().getWindow();
+        File file = fileChooser.showSaveDialog(stage);
+        if (file != null) {
+            // Obtener la extensión seleccionada por el usuario
+            String extension = getFileExtension(file);
+
+            // Guardar la imagen en el archivo seleccionado
+            try {
+                ImageIO.write(SwingFXUtils.fromFXImage(snapshot, null), extension, file);
+                System.out.println("La imagen se ha guardado como " + extension.toUpperCase() + ".");
+            } catch (IOException e) {
+                System.out.println("Error al guardar la imagen: " + e.getMessage());
+            }
+        }
+    }
+    
+    /***
+     * Función de ayuda para obtener la extensión del archivo que fue guardado.
+     * Autor: Freddy Tenesaca.
+     * @param event 
+     */
+    private String getFileExtension(File file) {
+        String fileName = file.getName();
+        int dotIndex = fileName.lastIndexOf('.');
+        if (dotIndex > 0 && dotIndex < fileName.length() - 1) {
+            return fileName.substring(dotIndex + 1).toLowerCase();
+        }
+        return "";
     }
 
     @FXML
@@ -817,4 +879,11 @@ public class PrincipalPaneController {
     public void recoverUser(User u) {
         this.currentUser = u;
     }
+
+    @FXML
+
+    public void guardaImg() {
+
+    }
+
 }
