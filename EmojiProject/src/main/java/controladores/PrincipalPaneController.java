@@ -3,7 +3,11 @@ package controladores;
 import javafx.embed.swing.*;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.util.HashMap;
 import javafx.util.Duration;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
@@ -13,10 +17,8 @@ import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.SnapshotParameters;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.effect.DropShadow;
-import javafx.scene.effect.InnerShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.WritableImage;
@@ -24,7 +26,6 @@ import javafx.scene.input.DragEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -198,6 +199,7 @@ public class PrincipalPaneController {
         isChangingFace = true;
         for (int i = 0; i <= 5; i++) {
             String currentPath = faces.get(i).getPath() + ".png";
+            System.out.println(currentPath);
             ImageView imgview = imageViews.get(i);
             try (FileInputStream input = new FileInputStream(App.fileImagesFaces + currentPath)) {
                 imageViewsFace.addLast(imgview);
@@ -650,6 +652,8 @@ public class PrincipalPaneController {
         setPositionImage(imgViewEyebrows);
     }
 
+    HashMap<String, String> currentImgsPath = new HashMap<>();
+
     @FXML
     private void btnAccessoriesClick(ActionEvent event) {
         isChangingFace = false;
@@ -660,7 +664,8 @@ public class PrincipalPaneController {
         for (int i = 0; i <= 5; i++) {
             ImageView imgview = imageViews.get(i);
             String currentPath = accessories.get(i).getPath() + ".png";
-            try (FileInputStream input = new FileInputStream(App.fileImagesAccessories + currentPath)) {
+            String absPath = App.fileImagesAccessories + currentPath;
+            try (FileInputStream input = new FileInputStream(absPath)) {
                 setImagesViews(input, imgview, 50, 50);
             } catch (IOException ex) {
                 System.out.println("Error imagen 1");
@@ -676,20 +681,29 @@ public class PrincipalPaneController {
         sliderSizeEvent(imgViewAccessories);
         setPositionImage(imgViewAccessories);
     }
+    String currentFacePath;
+    String currentEyePath;
+    String currentMouthPath;
+    String currentEyebrowPath;
+    String currentAccessoryPath;
 
     private void imagesViewsClick(int actualIndex, ImageView imgView) {
         if (isChangingFace) {
             String currentPath1 = currentPathFaces.get(actualIndex).getPath() + ".png";
+            String absPath = App.fileImagesFaces + currentPath1;
+            currentFacePath = absPath;
             setDropShadow(imgView);
-            try (FileInputStream input = new FileInputStream(App.fileImagesFaces + currentPath1)) {
+            try (FileInputStream input = new FileInputStream(absPath)) {
                 setImagesViews(input, imgViewEmoji, 300, 300);
             } catch (IOException ex) {
                 System.out.println("Error imagen 1");
             }
         } else if (isChangingEye) {
             String currentPath1 = currentPathEyes.get(actualIndex).getPath() + ".png";
+            String absPath = App.fileImagesEyes + currentPath1;
+            currentEyePath = absPath;
             setDropShadow(imgView);
-            try (FileInputStream input = new FileInputStream(App.fileImagesEyes + currentPath1)) {
+            try (FileInputStream input = new FileInputStream(absPath)) {
                 setImagesViews(input, imgViewEyes, 150, 150);
             } catch (IOException ex) {
                 System.out.println("Error imagen 1");
@@ -697,7 +711,9 @@ public class PrincipalPaneController {
         } else if (isChangingMouth) {
             String currentPath1 = currentPathMouths.get(actualIndex).getPath() + ".png";
             setDropShadow(imgView);
-            try (FileInputStream input = new FileInputStream(App.fileImagesMouths + currentPath1)) {
+            String absPath = App.fileImagesMouths + currentPath1;
+            currentMouthPath = absPath;
+            try (FileInputStream input = new FileInputStream(absPath)) {
                 setImagesViews(input, imgViewMouth, 150, 150);
             } catch (IOException ex) {
                 System.out.println("Error imagen 1");
@@ -705,7 +721,9 @@ public class PrincipalPaneController {
         } else if (isChangingEyebrows) {
             String currentPath1 = currentPathEyebrows.get(actualIndex).getPath() + ".png";
             setDropShadow(imgView);
-            try (FileInputStream input = new FileInputStream(App.fileImagesEyebrows + currentPath1)) {
+            String absPath = App.fileImagesEyebrows + currentPath1;
+            currentEyebrowPath = absPath;
+            try (FileInputStream input = new FileInputStream(absPath)) {
                 setImagesViews(input, imgViewEyebrows, 150, 150);
             } catch (IOException ex) {
                 System.out.println("Error imagen 1");
@@ -713,7 +731,9 @@ public class PrincipalPaneController {
         } else if (isChangingAccessories) {
             String currentPath1 = currentPathAccessories.get(actualIndex).getPath() + ".png";
             setDropShadow(imgView);
-            try (FileInputStream input = new FileInputStream(App.fileImagesAccessories + currentPath1)) {
+            String absPath = App.fileImagesAccessories + currentPath1;
+            currentAccessoryPath = absPath;
+            try (FileInputStream input = new FileInputStream(absPath)) {
                 setImagesViews(input, imgViewAccessories, 150, 150);
             } catch (IOException ex) {
                 System.out.println("Error imagen 1");
@@ -771,21 +791,119 @@ public class PrincipalPaneController {
 
     @FXML
     private void loadProject(ActionEvent event) {
+        // Mostrar el cuadro de diálogo de selección de archivos
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Cargar proyecto");
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Proyecto EmojiApp", "*.epj"));
 
+        Stage stage = (Stage) this.imgViewEmoji.getScene().getWindow();
+        java.io.File file = fileChooser.showOpenDialog(stage);
+        if (file != null) {
+            // Deserializar el objeto proyecto desde el archivo seleccionado
+            try {
+                FileInputStream fileIn = new FileInputStream(file);
+                ObjectInputStream in = new ObjectInputStream(fileIn);
+                HashMap<String, String> proyecto = (HashMap<String, String>) in.readObject();
+                in.close();
+                fileIn.close();
+                System.out.println("Objeto deserializado correctamente.");
+                System.out.println(proyecto);
+                // Actualizar las variables actuales con los valores cargados
+                currentFacePath = proyecto.getOrDefault("FacePath", "");
+                currentEyePath = proyecto.getOrDefault("EyesPath", "");
+                currentMouthPath = proyecto.getOrDefault("MouthPath", "");
+                currentAccessoryPath = proyecto.getOrDefault("AccesoriesPath", "");
+                currentEyebrowPath = proyecto.getOrDefault("EyebrowsPath", "");
+
+                // Actualizar las imágenes en las ImageView si el path no está vacío
+                if (!currentFacePath.isEmpty()) {
+                    try (FileInputStream input = new FileInputStream(currentFacePath)) {
+                        setImagesViews(input, imgViewEmoji, 300, 300);
+                    } catch (IOException ex) {
+                        System.out.println("Error imagen 1");
+                    }
+                }
+                if (!currentEyePath.isEmpty()) {
+                    try (FileInputStream input = new FileInputStream(currentEyePath)) {
+                        setImagesViews(input, imgViewEyes, 150, 150);
+                    } catch (IOException ex) {
+                        System.out.println("Error imagen 1");
+                    }
+                }
+                if (!currentMouthPath.isEmpty()) {
+                    try (FileInputStream input = new FileInputStream(currentMouthPath)) {
+                        setImagesViews(input, imgViewMouth, 150, 150);
+                    } catch (IOException ex) {
+                        System.out.println("Error imagen 1");
+                    }
+                }
+                if (!currentAccessoryPath.isEmpty()) {
+                    try (FileInputStream input = new FileInputStream(currentAccessoryPath)) {
+                        setImagesViews(input, imgViewAccessories, 150, 150);
+                    } catch (IOException ex) {
+                        System.out.println("Error imagen 1");
+                    }
+                }
+                if (!currentEyebrowPath.isEmpty()) {
+                    try (FileInputStream input = new FileInputStream(currentEyebrowPath)) {
+                        setImagesViews(input, imgViewEyebrows, 150, 150);
+                    } catch (IOException ex) {
+                        System.out.println("Error imagen 1");
+                    }
+                }
+            } catch (IOException | ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+    
+    private void setImageFromPath(String path, ImageView imageView) {
+        if (!path.isEmpty()) {
+            imageView.setImage(new Image(path));
+        }
     }
 
     @FXML
     private void saveProject(ActionEvent event) {
-        
+
+        HashMap<String, String> proyecto = new HashMap<>();
+        proyecto.put("FacePath", currentFacePath != null ? currentFacePath : "");
+        proyecto.put("EyesPath", currentEyePath != null ? currentEyePath : "");
+        proyecto.put("MouthPath", currentMouthPath != null ? currentMouthPath : "");
+        proyecto.put("AccesoriesPath", currentAccessoryPath != null ? currentAccessoryPath : "");
+        proyecto.put("EyebrowsPath", currentEyebrowPath != null ? currentEyebrowPath : "");
+        System.out.println(proyecto);
+        // Mostrar el cuadro de diálogo de guardado de archivos
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Guardar proyecto");
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Proyecto EmojiApp", "*.epj"));
+
+        Stage stage = (Stage) this.imgViewEmoji.getScene().getWindow();
+        java.io.File file = fileChooser.showSaveDialog(stage);
+        if (file != null) {
+            // Serializar el objeto proyecto
+            try {
+                FileOutputStream fileOut = new FileOutputStream(file);
+                ObjectOutputStream out = new ObjectOutputStream(fileOut);
+                out.writeObject(proyecto);
+                out.close();
+                fileOut.close();
+                System.out.println("Proyecto guardado correctamente.");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
-    
-    /***
-     * Función para guardar el emoji realizado como imagen.
-     * Autor: Freddy Tenesaca.
-     * @param event 
+
+    /**
+     * *
+     * Función para guardar el emoji realizado como imagen. Autor: Freddy
+     * Tenesaca.
+     *
+     * @param event
      */
     @FXML
-    private void saveImg(ActionEvent event){
+    private void saveImg(ActionEvent event) {
         // Capturar una imagen de emojiContainer
         SnapshotParameters parameters = new SnapshotParameters();
         parameters.setFill(javafx.scene.paint.Color.TRANSPARENT);
@@ -795,8 +913,8 @@ public class PrincipalPaneController {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Guardar imagen");
         fileChooser.getExtensionFilters().addAll(
-                new FileChooser.ExtensionFilter("Imagen JPEG", "*.jpg"),
-                new FileChooser.ExtensionFilter("Imagen PNG", "*.png")
+                new FileChooser.ExtensionFilter("Imagen PNG", "*.png"),
+                new FileChooser.ExtensionFilter("Imagen JPEG", "*.jpg")
         );
 
         // Mostrar el cuadro de diálogo para guardar el archivo
@@ -815,11 +933,13 @@ public class PrincipalPaneController {
             }
         }
     }
-    
-    /***
+
+    /**
+     * *
      * Función de ayuda para obtener la extensión del archivo que fue guardado.
      * Autor: Freddy Tenesaca.
-     * @param event 
+     *
+     * @param event
      */
     private String getFileExtension(File file) {
         String fileName = file.getName();
@@ -878,12 +998,6 @@ public class PrincipalPaneController {
 
     public void recoverUser(User u) {
         this.currentUser = u;
-    }
-
-    @FXML
-
-    public void guardaImg() {
-
     }
 
 }
